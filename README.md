@@ -1,5 +1,7 @@
-# KwiKryptor - Android
-## TODO
-* fix and finish predefined Themes
-* add Language selection + auto detection of system language
-* add about dialog - app version, converter version
+# Projekt na Programowanie Interfejsów Mobilnych
+Repozytorium to zawiera nieiwlką aplikacje osobistą mającą na celu zapoznanie nas z nowymi technologamii.
+
+Alternatywne wersje:
+* React
+* Flutter(?)
+## Wersja Java

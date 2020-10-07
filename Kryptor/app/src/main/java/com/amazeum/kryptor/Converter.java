@@ -68,7 +68,7 @@ class ConversionTable
 public class Converter
 {
 	public static TreeSet<Integer> eureka = new TreeSet<Integer>();
-	private String version = "10042020";
+	private String version = "07102020";
 
 	private static ConversionTable conversionTable = new ConversionTable();
 
