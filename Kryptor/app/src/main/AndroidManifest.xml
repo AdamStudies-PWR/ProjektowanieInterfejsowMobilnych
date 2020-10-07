@@ -9,10 +9,18 @@
         android:roundIcon="@mipmap/lock"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SettingsActivity" android:windowSoftInputMode="adjustResize"> </activity>
-        <activity android:name=".KryptoActivity" android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name=".AboutActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity
+            android:name=".KryptoActivity"
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

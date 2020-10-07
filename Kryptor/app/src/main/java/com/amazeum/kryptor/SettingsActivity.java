@@ -6,8 +6,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -36,6 +36,8 @@ public class SettingsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        Log.e("Activity", "Entered Settings");
 
         preferences = getSharedPreferences(PREFERENCE_FILE_KEY, MODE_PRIVATE);
         edit = preferences.edit();
@@ -94,8 +96,6 @@ public class SettingsActivity extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
             {
                 EditText text;
-                Button apply;
-                apply = findViewById(R.id.confirmButton);
                 int temp = themeSpinner.getSelectedItemPosition();
                 edit.putInt("theme", temp);
                 edit.apply();
@@ -134,7 +134,6 @@ public class SettingsActivity extends AppCompatActivity
                 Toast toast = Toast.makeText(context, R.string.restartString, Toast.LENGTH_SHORT);
                 if(!create) toast.show();
                 create = false;
-
             }
 
             @Override
@@ -161,21 +160,6 @@ public class SettingsActivity extends AppCompatActivity
 
         temporaryInt = preferences.getInt("theme", 0);
         themeSpinner.setSelection(temporaryInt);
-
-        settings = (EditText) findViewById(R.id.mainColor);
-        settings.setText(R.color.colorPrimary);
-
-        settings = (EditText) findViewById(R.id.secondaryColor);
-        settings.setText(R.color.colorPrimaryDark);
-
-        settings = (EditText) findViewById(R.id.accentColor);
-        settings.setText(R.color.colorAccent);
-
-        settings = (EditText) findViewById(R.id.textColor);
-        settings.setText(R.color.textColor);
-
-        settings = (EditText) findViewById(R.id.buttonColor);
-        settings.setText(R.color.buttonText);
     }
 
     public void returnCrypto(View view)
@@ -201,6 +185,13 @@ public class SettingsActivity extends AppCompatActivity
     {
         edit.putBoolean("autoRemove", shareSwitch.isChecked());
         edit.apply();
+    }
+
+    public void openAbout(View view)
+    {
+        Log.e("Activity", "About should now open");
+        Intent launchIntent = new Intent(this, AboutActivity.class);
+        startActivityForResult(launchIntent, 1);
     }
 
 }

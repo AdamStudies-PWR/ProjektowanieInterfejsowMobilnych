@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -83,7 +82,6 @@ public class KryptoActivity extends AppCompatActivity
         }
 
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
     }
 
     public void firstTime()

@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.TreeSet;
 
-class ConversionTable
+class ConversionTables
 {
 	int[] charToInt = {497, 38, 148, 69, 388, 281, 34, 295, 232, 10, 32, 343, 375, 175, 7, 150, 214,
 		197, 498, 416, 310, 195, 333, 274, 279, 2, 436, 507, 171, 369, 24, 9, 345, 109, 62, 85, 51,
@@ -70,15 +70,15 @@ public class Converter
 	public static TreeSet<Integer> eureka = new TreeSet<Integer>();
 	private String version = "07102020";
 
-	private static ConversionTable conversionTable = new ConversionTable();
+	private static ConversionTables conversionTables = new ConversionTables();
 
 	private int charToInt(char symbol)
 	{
 		int number = (int) symbol;
 
-		if(number < conversionTable.charToInt.length)
+		if(number < conversionTables.charToInt.length)
 		{
-			return conversionTable.charToInt[number];
+			return conversionTables.charToInt[number];
 		}
 		else return (int) '?';
 	}
@@ -88,9 +88,9 @@ public class Converter
 		if (number>511) number-=512;
 		if (number<0) number+=512;
 
-		if(number < conversionTable.intToChar.length)
+		if(number < conversionTables.intToChar.length)
 		{
-			return (char) conversionTable.intToChar[number];
+			return (char) conversionTables.intToChar[number];
 		}
 		else return '?';
 	}

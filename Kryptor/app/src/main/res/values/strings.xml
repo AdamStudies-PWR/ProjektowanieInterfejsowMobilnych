@@ -2,6 +2,7 @@
 
     <string name="app_name">KwiKryptor</string>
     <string name="action_settings">Ustawienia</string>
+    <string name="action_about">Informacje</string>
     <string name="copy_switch">Auto kopiowanie</string>
     <string name="share_switch">Auto udostępnianie</string>
     <string name="remove_switch">Usuń tekst</string>
@@ -13,7 +14,7 @@
     <string name="accent_color">Akcent:</string>
     <string name="button_color">Przyciski:</string>
     <string name="text_color">Tekst:</string>
-    <string name="accept">Zatosuj</string>
+    <string name="aboutButton">Informacje</string>
     <string name="encryption_mode">Enkrypcja</string>
     <string name="decryption_mode">Dekrypcja</string>
     <string name="share_button">Udostępnij</string>
@@ -21,6 +22,13 @@
     <string name="inHint">Wprowadź wiadomość</string>
     <string name="copyString">Skopiowano!</string>
     <string name="restartString">Zresetuj aplikacje aby zastosować</string>
+
+    <string name="infoMessage">Autor:</string>
+    <string name="authorString">Adam Krizar 241276</string>
+    <string name="infoVersion">Wersja KryptoSilnika: </string>
+    <string name="appVersion">Wersja Aplikacji: </string>
+
+    <string name="infoError">Błąd danych</string>
 
     <string-array name="mode_spinner">
         <item>Enkrypcja</item>
@@ -38,5 +46,21 @@
         <item>Podwójny niebieski</item>
         <item>Własny</item>
     </string-array>
+    <string name="title_activity_about">activity_about</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
 </resources>
