@@ -159,17 +159,17 @@
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/aboutButton"
-                android:layout_width="125dp"
-                android:layout_height="53dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
-                android:backgroundTint="@color/colorPrimaryDark"
-                android:text="@string/aboutButton"
-                android:onClick="openAbout"
-                android:textColor="@color/buttonText" />
+                <Button
+                    android:id="@+id/aboutButton"
+                    android:layout_width="125dp"
+                    android:layout_height="53dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:text="@string/applyButton"
+                    android:onClick="applySettings"
+                    android:textColor="@color/buttonText" />
 
         </LinearLayout>
     </ScrollView>
@@ -181,6 +181,7 @@
         android:layout_height="38dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@color/colorAccent"
         android:drawableStart="@drawable/ic_arrow_back_black_24dp"
         android:onClick="returnCrypto"
@@ -203,5 +204,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/kryptoBar" />
+
+    <Button
+        android:id="@+id/aboutbutton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="56dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorAccent"
+        android:drawableEnd="@drawable/ic_baseline_info_24"
+        android:onClick="openAbout"
+        android:title="@string/action_settings"
+        app:layout_constraintBottom_toBottomOf="@+id/kryptoBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

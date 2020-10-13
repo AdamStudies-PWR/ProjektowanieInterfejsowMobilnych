@@ -8,11 +8,19 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import java.util.Locale;
+
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 public class KryptoActivity extends AppCompatActivity
 {
@@ -43,6 +51,12 @@ public class KryptoActivity extends AppCompatActivity
         preferences = getSharedPreferences(PREFERENCE_FILE_KEY, MODE_PRIVATE);
         edit = preferences.edit();
 
+        if(!preferences.getBoolean("firstTime", true))
+        {
+            if(preferences.getInt("lang", 0) == 0) setLocale("pl");
+                else setLocale("en");
+        }
+
         int theme = preferences.getInt("theme", 0);
 
         switch(theme)
@@ -61,7 +75,7 @@ public class KryptoActivity extends AppCompatActivity
         outText = (EditText) findViewById(R.id.outText);
         inText = (EditText) findViewById(R.id.inText);
 
-        if(preferences.getBoolean("firstTime", false)) firstTime();
+        if(preferences.getBoolean("firstTime", true)) firstTime();
         else
         {
             if(preferences.getInt("mode", 0) == 0)
@@ -86,15 +100,28 @@ public class KryptoActivity extends AppCompatActivity
 
     public void firstTime()
     {
-        edit.putBoolean("firstTime", true);
+        Resources res = getResources();
+        Configuration conf = res.getConfiguration();
+        if(conf.getLocales().get(0).getCountry().equals("pl"))
+        {
+            edit.putInt("lang", 0);
+            setLocale("pl");
+        }
+        else
+        {
+            edit.putInt("lang", 1);
+            setLocale("en");
+        }
+
+        edit.putBoolean("firstTime", false);
         edit.putBoolean("autoSave", false);
         edit.putBoolean("autoShare", false);
         edit.putBoolean("autoRemove", true);
         edit.putInt("mode", 0);
-        edit.putInt("lang", 0);
         edit.putInt("theme", 0);
 
         edit.apply();
+        resetActivity();
     }
 
     public void openSettings(View view)
@@ -110,13 +137,17 @@ public class KryptoActivity extends AppCompatActivity
 
         if (requestCode == 1)
         {
-            if (resultCode == Activity.RESULT_CANCELED)
-            {
                 autoRemove = preferences.getBoolean("autoRemove", false);
                 autoCopy = preferences.getBoolean("autoSave", false);
                 autoShare = preferences.getBoolean("autoShare", false);
-            }
+                if(data.getBooleanExtra("RESET", false)) resetActivity();
         }
+    }
+
+    private void resetActivity()
+    {
+        finish();
+        startActivity(getIntent());
     }
 
     public void switchMode(View view)
@@ -175,6 +206,16 @@ public class KryptoActivity extends AppCompatActivity
         if(autoShare) shareFunction();
         if(autoCopy) copyFunction();
         if(autoRemove) inText.setText("");
+    }
+
+    public void setLocale(String language)
+    {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
     }
 
 }

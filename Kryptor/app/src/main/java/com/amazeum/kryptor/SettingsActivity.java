@@ -6,15 +6,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity
 {
@@ -30,17 +34,18 @@ public class SettingsActivity extends AppCompatActivity
     Spinner langSpinner;
     Spinner themeSpinner;
 
-    boolean create = true;
+    boolean reset = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        Log.e("Activity", "Entered Settings");
-
         preferences = getSharedPreferences(PREFERENCE_FILE_KEY, MODE_PRIVATE);
         edit = preferences.edit();
+
+        if(preferences.getInt("lang", 0) == 0) setLocale("pl");
+        else setLocale("en");
 
         int theme = preferences.getInt("theme", 0);
 
@@ -60,88 +65,8 @@ public class SettingsActivity extends AppCompatActivity
         removeSwitch = (Switch) findViewById(R.id.remove_switch);
 
         modeSpinner = (Spinner) findViewById(R.id.modeBox);
-        modeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
-            {
-                edit.putInt("mode", modeSpinner.getSelectedItemPosition());
-                edit.apply();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }
-
-        });
-
         langSpinner = (Spinner) findViewById(R.id.langBox);
-        langSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
-            {
-                edit.putInt("lang", langSpinner.getSelectedItemPosition());
-                edit.apply();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }
-
-        });
-
         themeSpinner = (Spinner) findViewById(R.id.themeBox);
-        themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id)
-            {
-                EditText text;
-                int temp = themeSpinner.getSelectedItemPosition();
-                edit.putInt("theme", temp);
-                edit.apply();
-
-                /*if(temp == 3)
-                {
-                    text = (EditText) findViewById(R.id.mainColor);
-                    text.setEnabled(true);
-                    text = (EditText) findViewById(R.id.secondaryColor);
-                    text.setEnabled(true);
-                    text = (EditText) findViewById(R.id.accentColor);
-                    text.setEnabled(true);
-                    text = (EditText) findViewById(R.id.textColor);
-                    text.setEnabled(true);
-                    text = (EditText) findViewById(R.id.buttonColor);
-                    text.setEnabled(true);
-                    apply.setEnabled(true);
-                }
-                else
-                {
-                    text = (EditText) findViewById(R.id.mainColor);
-                    text.setEnabled(false);
-                    text = (EditText) findViewById(R.id.secondaryColor);
-                    text.setEnabled(false);
-                    text = (EditText) findViewById(R.id.accentColor);
-                    text.setEnabled(false);
-                    text = (EditText) findViewById(R.id.textColor);
-                    text.setEnabled(false);
-                    text = (EditText) findViewById(R.id.buttonColor);
-                    text.setEnabled(false);
-                    apply.setEnabled(false);
-                }*/
-
-                Context context = getApplicationContext();
-
-                Toast toast = Toast.makeText(context, R.string.restartString, Toast.LENGTH_SHORT);
-                if(!create) toast.show();
-                create = false;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) { }
-
-        });
-
-        EditText settings;
 
         temporaryBool = preferences.getBoolean("autoSave", false);
         copySwitch.setChecked(temporaryBool);
@@ -165,7 +90,8 @@ public class SettingsActivity extends AppCompatActivity
     public void returnCrypto(View view)
     {
         Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_CANCELED, returnIntent);
+        returnIntent.putExtra("RESET", reset);
+        setResult(1, returnIntent);
         finish();
     }
 
@@ -189,9 +115,44 @@ public class SettingsActivity extends AppCompatActivity
 
     public void openAbout(View view)
     {
-        Log.e("Activity", "About should now open");
         Intent launchIntent = new Intent(this, AboutActivity.class);
-        startActivityForResult(launchIntent, 1);
+        startActivityForResult(launchIntent, 2);
     }
 
+    public void applySettings(View view)
+    {
+        int theme = themeSpinner.getSelectedItemPosition();
+        int lang = langSpinner.getSelectedItemPosition();
+        int mode = modeSpinner.getSelectedItemPosition();
+
+        if(lang != preferences.getInt("lang", 0))
+        {
+            switch(lang)
+            {
+                case 0:
+                    setLocale("pl");
+                    break;
+                default:
+                    setLocale("en");
+            }
+            reset = true;
+        }
+
+        edit.putInt("theme", theme);
+        edit.putInt("lang", lang);
+        edit.putInt("mode", mode);
+        edit.apply();
+
+        returnCrypto(view);
+    }
+
+    public void setLocale(String language)
+    {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = getBaseContext().getResources().getConfiguration();
+        config.setLocale(locale);
+        getBaseContext().getResources().updateConfiguration(config,
+                getBaseContext().getResources().getDisplayMetrics());
+    }
 }
