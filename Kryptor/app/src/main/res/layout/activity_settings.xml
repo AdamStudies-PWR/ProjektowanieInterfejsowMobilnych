@@ -160,7 +160,7 @@
             </LinearLayout>
 
                 <Button
-                    android:id="@+id/aboutButton"
+                    android:id="@+id/applyButton"
                     android:layout_width="125dp"
                     android:layout_height="53dp"
                     android:layout_gravity="center"

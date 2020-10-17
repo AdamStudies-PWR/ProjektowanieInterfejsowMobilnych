@@ -29,6 +29,15 @@ public class AboutActivity extends AppCompatActivity
         if(preferences.getInt("lang", 0) == 0) setLocale("pl");
         else setLocale("en");
 
+        int theme = preferences.getInt("theme", 0);
+
+        switch(theme)
+        {
+            case 0: setTheme(R.style.AppTheme); break;
+            case 1: setTheme(R.style.PinkTheme); break;
+            default:
+        }
+
         setContentView(R.layout.activity_about);
 
         Converter converter = new Converter();

@@ -13,6 +13,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -52,7 +53,10 @@ public class SettingsActivity extends AppCompatActivity
         switch(theme)
         {
             case 0: setTheme(R.style.AppTheme); break;
-            case 1: setTheme(R.style.PinkTheme); break;
+            case 1:
+            {
+                setTheme(R.style.PinkTheme);
+            } break;
             default:
         }
 
@@ -127,23 +131,20 @@ public class SettingsActivity extends AppCompatActivity
 
         if(lang != preferences.getInt("lang", 0))
         {
-            switch(lang)
-            {
-                case 0:
-                    setLocale("pl");
-                    break;
-                default:
-                    setLocale("en");
-            }
             reset = true;
+            edit.putInt("lang", theme);
         }
 
-        edit.putInt("theme", theme);
-        edit.putInt("lang", lang);
+        if(theme != preferences.getInt("theme", 0))
+        {
+            reset = true;
+            edit.putInt("theme", theme);
+        }
+
         edit.putInt("mode", mode);
         edit.apply();
 
-        returnCrypto(view);
+        if(reset) returnCrypto(view);
     }
 
     public void setLocale(String language)

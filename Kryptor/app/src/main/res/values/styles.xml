@@ -9,13 +9,10 @@
         <item name="android:textColor">@color/buttonText</item>
     </style>
 
-    <style name="GreenBar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:backgroundTint">@color/colorAccent</item>
+    <style name="GreenTitleBar" parent="AppTheme">
+        <item name="titleBarBackground">@color/pinkAccent</item>
     </style>
 
-    <style name="GreenText" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/colorAccent</item>
-    </style>
 
     <style name="PinkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/pinkPrimaryDark</item>
