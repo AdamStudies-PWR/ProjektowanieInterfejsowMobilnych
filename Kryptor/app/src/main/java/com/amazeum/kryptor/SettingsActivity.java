@@ -2,22 +2,13 @@ package com.amazeum.kryptor;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -47,18 +38,8 @@ public class SettingsActivity extends AppCompatActivity
 
         if(preferences.getInt("lang", 0) == 0) setLocale("pl");
         else setLocale("en");
-
-        int theme = preferences.getInt("theme", 0);
-
-        switch(theme)
-        {
-            case 0: setTheme(R.style.AppTheme); break;
-            case 1:
-            {
-                setTheme(R.style.PinkTheme);
-            } break;
-            default:
-        }
+        if(preferences.getInt("theme", 0) == 0) setTheme(R.style.GreenTheme);
+        else setTheme(R.style.PinkTheme);
 
         setContentView(R.layout.activity_settings);
 

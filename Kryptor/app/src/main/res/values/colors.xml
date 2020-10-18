@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#303030</color>
-    <color name="colorPrimaryDark">#282828</color>
-    <color name="colorAccent">#85ba3c</color>
-    <color name="textColor">#85ba3c</color>
-    <color name="buttonText">#ffffff</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
 
-    <color name="pinkPrimary">#ffffff</color>
-    <color name="pinkPrimaryDark">#ffdde3</color>
-    <color name="pinkAccent">#ff00e3</color>
-    <color name="textPink">#000000</color>
-    <color name="butonPink">#000000</color>
+    <color name="lightGray">#303030</color>
+    <color name="darkGray">#282828</color>
+    <color name="lime">#85ba3c</color>
+
+    <color name="pastelSalmon">#ffdde3</color>
+    <color name="pink">#ff00e3</color>
+    <color name="darkPink">#9e028d</color>
 </resources>

@@ -12,7 +12,7 @@
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     android:textAlignment="center"
-    android:backgroundTint="@color/colorAccent"
+    android:backgroundTint="?detailsColor"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="1.0"
     app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +44,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="44dp"
                 android:onClick="switchMode"
+                android:textColor="?textColor"
                 android:text="@string/encryption_mode" />
 
             <EditText
@@ -60,7 +61,7 @@
                 android:focusable="false"
                 android:focusableInTouchMode="false"
                 android:inputType="textMultiLine"
-                android:textColor="@color/textColor" />
+                android:textColor="?detailsColor" />
 
             <LinearLayout
                 android:id="@+id/buttonsLayout"
@@ -78,9 +79,10 @@
                     android:layout_marginStart="44dp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="?buttonColor"
                     android:drawableLeft="@drawable/ic_share_black_24dp"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableTint="?buttonIconColor"
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:onClick="buttonShare"
                     android:text="@string/share_button" />
@@ -92,9 +94,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="44dp"
                     android:layout_weight="1"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="?buttonColor"
                     android:drawableLeft="@drawable/ic_content_copy_black_24dp"
-                    android:drawableTint="@color/colorAccent"
+                    android:drawableTint="?buttonIconColor"
+                    android:textColor="@color/white"
                     android:gravity="center"
                     android:onClick="buttonCopy"
                     android:text="@string/copy_button" />
@@ -111,7 +114,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
+        android:background="?detailsColor"
         android:drawableEnd="@drawable/ic_settings_black_24dp"
         android:onClick="openSettings"
         android:title="@string/action_settings"
@@ -144,8 +147,8 @@
             android:ems="10"
             android:hint="@string/inHint"
             android:inputType="textPersonName"
-            android:textColor="@color/textColor"
-            android:textColorHint="@color/textColor" />
+            android:textColor="?detailsColor"
+            android:textColorHint="?detailsColor" />
 
         <Button
             android:id="@+id/kryptoButton"
@@ -154,9 +157,9 @@
             android:layout_gravity="bottom"
             android:layout_marginStart="12dp"
             android:layout_weight="0"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:backgroundTint="?buttonColor"
             android:drawableLeft="@drawable/ic_send_black_24dp"
-            android:drawableTint="@color/colorAccent"
+            android:drawableTint="?buttonIconColor"
             android:onClick="translate" />
 
     </LinearLayout>
@@ -169,7 +172,7 @@
     android:layout_marginTop="12dp"
     android:text="@string/app_name"
     android:textAlignment="center"
-    android:textColor="@color/colorPrimaryDark"
+    android:textColor="@color/darkGray"
     android:textSize="30sp"
     app:layout_constraintBottom_toBottomOf="@+id/kryptoBar"
     app:layout_constraintEnd_toEndOf="parent"

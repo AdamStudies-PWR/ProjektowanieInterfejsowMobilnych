@@ -17,12 +17,10 @@
     <string name="inHint">Wprowadź wiadomość</string>
     <string name="copyString">Skopiowano!</string>
     <string name="restartString">Zresetuj aplikacje aby zastosować</string>
-
     <string name="infoMessage">Autor:</string>
     <string name="authorString" translatable="false">Adam Krizar 241276</string>
     <string name="infoVersion">Wersja KryptoSilnika: </string>
     <string name="appVersion">Wersja Aplikacji: </string>
-
     <string name="infoError">Błąd danych</string>
 
     <string-array name="mode_spinner">
@@ -37,7 +35,7 @@
 
     <string-array name="theme_spinner">
         <item>Ciemna zieleń</item>
-        <item>Jasny róż</item>
+        <item>Boleśnie różowy</item>
     </string-array>
 
 </resources>

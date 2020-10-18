@@ -28,36 +28,31 @@ public class AboutActivity extends AppCompatActivity
 
         if(preferences.getInt("lang", 0) == 0) setLocale("pl");
         else setLocale("en");
-
-        int theme = preferences.getInt("theme", 0);
-
-        switch(theme)
-        {
-            case 0: setTheme(R.style.AppTheme); break;
-            case 1: setTheme(R.style.PinkTheme); break;
-            default:
-        }
+        if(preferences.getInt("theme", 0) == 0) setTheme(R.style.GreenTheme);
+        else setTheme(R.style.PinkTheme);
 
         setContentView(R.layout.activity_about);
 
         Converter converter = new Converter();
 
         TextView kryptoVersion = (TextView) findViewById(R.id.versionInfoLabel);
+        TextView appVersion = (TextView) findViewById(R.id.appDataLabel);
+
         kryptoVersion.setText(converter.getVersion());
 
         Context context = getApplicationContext();
         PackageManager manager = context.getPackageManager();
         PackageInfo info = null;
+
         try
         {
             info = manager.getPackageInfo(context.getPackageName(), 0);
+            appVersion.setText(info.versionName);
         } catch (PackageManager.NameNotFoundException error)
         {
             error.printStackTrace();
+            appVersion.setText("ERROR");
         }
-
-        TextView appVersion = (TextView) findViewById(R.id.appDataLabel);
-        appVersion.setText(info.versionName);
     }
 
     public void returnSettings(View view)

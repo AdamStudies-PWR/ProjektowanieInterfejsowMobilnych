@@ -13,7 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:textAlignment="center"
-        android:backgroundTint="@color/colorAccent"
+        android:backgroundTint="?detailsColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,6 +45,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="44dp"
                 android:onClick="switchCopy"
+                android:textColor="?textColor"
                 android:text="@string/copy_switch" />
 
             <Switch
@@ -56,6 +57,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="44dp"
                 android:onClick="switchShare"
+                android:textColor="?textColor"
                 android:text="@string/share_switch" />
 
             <Switch
@@ -67,6 +69,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="44dp"
                 android:onClick="switchRemove"
+                android:textColor="?textColor"
                 android:text="@string/remove_switch" />
 
             <LinearLayout
@@ -95,7 +98,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="44dp"
                     android:entries="@array/mode_spinner"
-                    android:textColor="@color/textColor"
+                    android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent" />
 
             </LinearLayout>
@@ -166,10 +169,10 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
-                    android:backgroundTint="@color/colorPrimaryDark"
+                    android:backgroundTint="?buttonColor"
                     android:text="@string/applyButton"
                     android:onClick="applySettings"
-                    android:textColor="@color/buttonText" />
+                    android:textColor="@color/white" />
 
         </LinearLayout>
     </ScrollView>
@@ -182,7 +185,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
+        android:background="?detailsColor"
         android:drawableStart="@drawable/ic_arrow_back_black_24dp"
         android:onClick="returnCrypto"
         android:title="@string/action_settings"
@@ -198,7 +201,7 @@
         android:layout_marginTop="12dp"
         android:text="@string/action_settings"
         android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/darkGray"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/kryptoBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -213,7 +216,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
+        android:background="?detailsColor"
         android:drawableEnd="@drawable/ic_baseline_info_24"
         android:onClick="openAbout"
         android:title="@string/action_settings"
