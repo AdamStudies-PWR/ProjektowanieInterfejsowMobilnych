@@ -2,6 +2,6 @@
 Repozytorium to zawiera nieiwlką aplikacje osobistą mającą na celu zapoznanie nas z nowymi technologamii.
 
 Alternatywne wersje:
-* [Java](AdamStudies-PWR/ProjektowanieInterfejsowMobilnych/tree/Java)
+* [Java](../Java)
 * Flutter(?)
 ## Wersja Java
