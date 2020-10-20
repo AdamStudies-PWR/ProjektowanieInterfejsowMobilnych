@@ -4,4 +4,4 @@ Repozytorium to zawiera nieiwlką aplikacje osobistą mającą na celu zapoznani
 Alternatywne wersje:
 * [Java](https://github.com/AdamStudies-PWR/ProjektowanieInterfejsowMobilnych/tree/Java)
 * Flutter(?)
-## Wersja Java
+## Wersja React Native
