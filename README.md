@@ -2,6 +2,6 @@
 Repozytorium to zawiera nieiwlką aplikacje osobistą mającą na celu zapoznanie nas z nowymi technologamii.
 
 Alternatywne wersje:
-* React Native
+* [Java](AdamStudies-PWR/ProjektowanieInterfejsowMobilnych/React)
 * Flutter(?)
 ## Wersja Java
