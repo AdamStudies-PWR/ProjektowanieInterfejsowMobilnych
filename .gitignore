@@ -84,19 +84,21 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 
-# React
-node_modules/
+# Android Studio
 *.iml
 .gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
+Kryptor/local.properties
+Kryptor/.idea/caches
+Kryptor/.idea/libraries
+Kryptor/.idea/modules.xml
+Kryptor/.idea/workspace.xml
+Kryptor/.idea/navEditor.xml
+Kryptor/.idea/assetWizardSettings.xml
+Kryptor.DS_Store
 /build
-/captures
+Kryptor/captures
 .externalNativeBuild
 .cxx
+
+# React
+node_modules/
