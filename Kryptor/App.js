@@ -10,6 +10,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
+import Icon from 'react-native-vector-icons/Feather';
 
 import KryptorActivity from './Activities/Kryptor.js'
 import SettingsActivity from './Activities/Settings.js'
@@ -33,6 +34,28 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+function StackScreen() 
+{
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: 'My home',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 const Stack = createStackNavigator();
 
 const KwiKryptorApp = ({}) =>
@@ -41,14 +64,18 @@ const KwiKryptorApp = ({}) =>
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Kryptor" 
+          name="KwiKryptor"
           component={KryptorActivity}
           options={({navigation}) => ({
+            headerTitleStyle: { alignSelf: 'center', textAlign: 'center', marginLeft: 60},
+            headerStyle: {
+              backgroundColor: '#00334C',
+            },
             headerRight: () => (
-              <Button
+              <Icon.Button
+                name="settings"
+                backgroundColor="#00334C"
                 onPress={() => navigation.navigate('Settings')}
-                title="Info"
-                color="#fff"
               />
           ),})}
         />
@@ -56,17 +83,26 @@ const KwiKryptorApp = ({}) =>
           name="Settings" 
           component={SettingsActivity}
           options={({navigation}) => ({
+            headerTitleStyle: { alignSelf: 'center' },
+            headerStyle: {
+              backgroundColor: '#00334C',
+            },
             headerRight: () => (
-              <Button
+              <Icon.Button
+                name="help-circle"
+                backgroundColor="#00334C"
                 onPress={() => navigation.navigate('About')}
-                title="Info"
-                color="#fff"
-              />
+              />            
           ),})}
         />
         <Stack.Screen 
           name="About" 
           component={AboutActivity}
+          options={({navigation}) => ({
+            headerTitleStyle: { alignSelf: 'center', textAlign: 'center', marginRight: 55 },
+            headerStyle: {
+              backgroundColor: '#00334C',
+          },})}
         />
       </Stack.Navigator>
     </NavigationContainer>

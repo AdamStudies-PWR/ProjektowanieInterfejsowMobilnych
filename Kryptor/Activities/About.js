@@ -3,11 +3,19 @@ import React from 'react';
 
 import {
   Text,
-  Button
+  View
 } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+
+import styles from '../Styles/Styles.js'
 
 const AboutActivity = ({ navigation }) => {
-  return <Text>Here should be about section</Text>;
+  return (
+    <View style = { styles.container }>
+      <ScrollView>    
+        <Text>Here should be about section</Text>
+      </ScrollView>
+    </View>);
 };
 
 export default AboutActivity
