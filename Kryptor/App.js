@@ -35,17 +35,34 @@ import {
 
 const Stack = createStackNavigator();
 
-const KwiKryptorApp: () => React$Node = () => {
+const KwiKryptorApp = ({}) =>
+{
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="Kryptor"
+          name="Kryptor" 
           component={KryptorActivity}
+          options={({navigation}) => ({
+            headerRight: () => (
+              <Button
+                onPress={() => navigation.navigate('Settings')}
+                title="Info"
+                color="#fff"
+              />
+          ),})}
         />
         <Stack.Screen 
           name="Settings" 
           component={SettingsActivity}
+          options={({navigation}) => ({
+            headerRight: () => (
+              <Button
+                onPress={() => navigation.navigate('About')}
+                title="Info"
+                color="#fff"
+              />
+          ),})}
         />
         <Stack.Screen 
           name="About" 
@@ -55,7 +72,5 @@ const KwiKryptorApp: () => React$Node = () => {
     </NavigationContainer>
   );
 };
-
-
 
 export default KwiKryptorApp;
