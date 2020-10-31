@@ -1,7 +1,8 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
+  Switch,
   View,
   StatusBar,
   Text
@@ -10,12 +11,29 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import styles from '../Styles/Styles.js'
 
-const KryptorActivity = ({ navigation }) => {
+const KryptorActivity = ({}) => {
+  // Elements
+  [decryption, setIsEnabled] = useState(false);
+
+  // Functions
+  toggleMode = () => {
+    setIsEnabled(previousState => !previousState)
+  }
+
+  // Render
   return (
     <View style = { styles.container }>
       <ScrollView>
         <StatusBar backgroundColor='#00334C'/>
-        <Text>This is main activity</Text>
+        <View style={styles.rowView}>
+          <Text style={styles.switch}>{decryption ? 'Decryption' : 'Encryption'}</Text>
+          <Switch
+            style={styles.switch}
+            onValueChange={toggleMode}
+            value={decryption}
+            label="Encryption"
+          />
+        </View>
       </ScrollView>
     </View>);
   };
