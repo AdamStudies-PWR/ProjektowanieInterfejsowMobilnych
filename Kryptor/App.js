@@ -12,9 +12,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
 import Icon from 'react-native-vector-icons/Feather';
 
-import KryptorActivity from './Activities/Kryptor.js'
-import SettingsActivity from './Activities/Settings.js'
-import AboutActivity from './Activities/About.js'
+import KryptorActivity from './src/Activities/Kryptor.js'
+import SettingsActivity from './src/Activities/Settings.js'
+import AboutActivity from './src/Activities/About.js'
 
 import {
   SafeAreaView,

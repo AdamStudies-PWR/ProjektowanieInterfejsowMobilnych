@@ -2,7 +2,7 @@ package com.amazeum.kryptor2;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 
@@ -169,11 +169,11 @@ public class Converter extends ReactContextBaseJavaModule
 	}
 	
 	@ReactMethod
-	public void encryption(String text)
+	public void encryption(String text, Promise promise)
 	{
 		//--------------------------------------------------------------23102018
 		String result 				="";
-		if (text.length()<1) stringCallback(result);
+		if (text.length()<1) promise.resolve(result);
 		LinkedList<Integer> temp 	= new LinkedList<Integer>();
 		Random random 				= new Random();
 		
@@ -208,14 +208,14 @@ public class Converter extends ReactContextBaseJavaModule
 		}
 		
 		
-		stringCallback(result);
+		promise.resolve(result);
 	}
 	
 	@ReactMethod
-	public void decryption(String text)
+	public void decryption(String text, Promise promise)
 	{
 		String result 				="";
-		if (text.length()<1) stringCallback(result);
+		if (text.length()<1) promise.resolve(result);
 		LinkedList<Integer> temp 	= new LinkedList<Integer>();
 		
 		int A1, A2,A3,A4=charToInt(text.charAt(text.length()-1));
@@ -240,14 +240,14 @@ public class Converter extends ReactContextBaseJavaModule
 		
 		for(int var : temp) result=result+this.intToChar(var);
 		
-		stringCallback(result);
+		promise.resolve(result);
 	}
 
 	@ReactMethod
-	public void getVersion() { stringCallback(version); }
+	public void getVersion(Promise promise) { promise.resolve(version);}
 
 	@Override
-    public String getName() { return "Converter";}
+    public String getName() { return "Converter"; }
 	
 }
 	

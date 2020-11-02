@@ -13,13 +13,14 @@ const styles = StyleSheet.create(
   {
     flex: 1,
     paddingLeft: 30,
-    paddingRight: 30,
-    paddingTop: 40,
+    paddingRight: 30
   },
   rowView:
   {
     alignSelf: "center",
-    flexDirection: "row"
+    alignContent: "center",
+    flexDirection: "row",
+    paddingTop: 35
   }
 });
 
