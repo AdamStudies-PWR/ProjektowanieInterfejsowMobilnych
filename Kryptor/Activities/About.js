@@ -9,7 +9,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import styles from '../Styles/Styles.js'
 
-const AboutActivity = ({ navigation }) => {
+const AboutActivity = ({}) => {
   return (
     <View style = { styles.container }>
       <ScrollView>    

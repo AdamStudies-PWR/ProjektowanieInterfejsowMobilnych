@@ -1,11 +1,17 @@
 package com.amazeum.kryptor2;
 
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.uimanager.IllegalViewOperationException;
+
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.TreeSet;
 
 class ConversionTables
-{
+{	
 	int[] charToInt = {497, 38, 148, 69, 388, 281, 34, 295, 232, 10, 32, 343, 375, 175, 7, 150, 214,
 		197, 498, 416, 310, 195, 333, 274, 279, 2, 436, 507, 171, 369, 24, 9, 345, 109, 62, 85, 51,
 		225, 500, 41, 123, 509, 110, 466, 64, 382, 449, 84, 390, 164, 351, 245, 502, 306, 101, 389,
@@ -65,8 +71,13 @@ class ConversionTables
 	};
 }
 
-public class Converter
+public class Converter extends ReactContextBaseJavaModule
 {
+	public Converter(ReactApplicationContext reactContext)
+	{
+        super(reactContext);
+	}
+
 	public static TreeSet<Integer> eureka = new TreeSet<Integer>();
 	private String version = "07102020";
 
@@ -156,12 +167,13 @@ public class Converter
 				return text;
 		}
 	}
-		
-	public String encryption(String text)
+	
+	@ReactMethod
+	public void encryption(String text)
 	{
 		//--------------------------------------------------------------23102018
 		String result 				="";
-		if (text.length()<1) return result;
+		if (text.length()<1) stringCallback(result);
 		LinkedList<Integer> temp 	= new LinkedList<Integer>();
 		Random random 				= new Random();
 		
@@ -196,13 +208,14 @@ public class Converter
 		}
 		
 		
-		return result;
+		stringCallback(result);
 	}
 	
-	public String decryption(String text)
+	@ReactMethod
+	public void decryption(String text)
 	{
 		String result 				="";
-		if (text.length()<1) return result;
+		if (text.length()<1) stringCallback(result);
 		LinkedList<Integer> temp 	= new LinkedList<Integer>();
 		
 		int A1, A2,A3,A4=charToInt(text.charAt(text.length()-1));
@@ -227,10 +240,14 @@ public class Converter
 		
 		for(int var : temp) result=result+this.intToChar(var);
 		
-		return result;
+		stringCallback(result);
 	}
 
-	public String getVersion() { return version; }
+	@ReactMethod
+	public void getVersion() { stringCallback(version); }
+
+	@Override
+    public String getName() { return "Converter";}
 	
 }
 	
