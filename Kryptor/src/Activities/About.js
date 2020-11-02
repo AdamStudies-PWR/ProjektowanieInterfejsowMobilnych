@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 
 import {
+  NativeModules,
   Text,
   View
 } from 'react-native';
@@ -13,7 +14,7 @@ const AboutActivity = ({}) => {
   return (
     <View style = { styles.container }>
       <ScrollView>    
-        <Text>Here should be about section</Text>
+        <Text>Test</Text>
       </ScrollView>
     </View>);
 };
