@@ -16,46 +16,6 @@ import KryptorActivity from './src/Activities/Kryptor.js'
 import SettingsActivity from './src/Activities/Settings.js'
 import AboutActivity from './src/Activities/About.js'
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Button,
-  Text,
-  StatusBar,
-} from 'react-native';
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-function StackScreen() 
-{
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: 'My home',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
 const Stack = createStackNavigator();
 
 const KwiKryptorApp = ({}) =>
@@ -98,7 +58,7 @@ const KwiKryptorApp = ({}) =>
         <Stack.Screen 
           name="About" 
           component={AboutActivity}
-          options={({navigation}) => ({
+          options={({}) => ({
             headerTitleStyle: { alignSelf: 'center', textAlign: 'center', marginRight: 55 },
             headerStyle: {
               backgroundColor: '#00334C',

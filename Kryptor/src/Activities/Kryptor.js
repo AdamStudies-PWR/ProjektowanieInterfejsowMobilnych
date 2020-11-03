@@ -1,41 +1,116 @@
 import 'react-native-gesture-handler';
-import React, { useState } from 'react';
+import React from 'react';
+import { Component } from 'react';
 
 import {
-  Switch,
+  TouchableHighlight,
   View,
   StatusBar,
-  Text
+  Text,
+  Button
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Feather';
 
 import styles from '../Styles/Styles.js'
+import MySwitch from '../Components/mySwitch.js'
+import Converter from '../modules/Converter.js';
 
-const KryptorActivity = ({}) => {
-  // Elements
-  [decryption, setIsEnabled] = useState(false);
-
-  // Functions
-  toggleMode = () => {
-    setIsEnabled(previousState => !previousState)
+class KryptorActivity extends Component 
+{
+  constructor()
+  {
+    super()
+    this.state = {
+      decryption: false,
+      output: "",
+      input: ""
+    }
   }
 
-  // Render
-  return (
-    <View style = { styles.container }>
+  toggleMode = (value) => {
+    this.setState({decryption: value})
+  }
+
+  sendButton(){this.kryptoFunction()}
+
+  kryptoFunction = async() => {
+    var result = ""
+    if(this.state.decryption)
+    {
+      try
+      {
+        result = await Converter.decryption(this.state.input)
+      }
+      catch(error)
+      {
+        console.error(error)
+      }
+    }
+    else
+    {
+      try
+      {
+        result = await Converter.encryption(this.state.input)
+      }
+      catch(error)
+      {
+        console.error(error)
+      }
+    }
+    console.log("Triggered");
+    this.setState(
+      {
+        output: result,
+        input: ""
+      }
+    )
+  }
+
+  render()
+  {
+    return (
+    <View style = {styles.container}>
       <ScrollView>
         <StatusBar backgroundColor='#00334C'/>
         <View style={styles.rowView}>
-          <Text style={styles.switch}>{decryption ? 'Decryption' : 'Encryption'}</Text>
-          <Switch
-            style={styles.switch}
-            onValueChange={toggleMode}
-            value={decryption}
-            label="Encryption"
+          <Text style={styles.switch}>{this.state.decryption ? 'Decryption' : 'Encryption'}</Text>
+          <MySwitch
+            toggleSwitch={this.toggleMode}
+            switchValue={this.state.decryption}
           />
+        </View>
+        <View>
+          <Text>{this.state.output}</Text>
+        </View>
+        <View style={styles.rowView}>
+          <Icon.Button
+            style={styles.button}
+             name="copy">
+             Copy
+          </Icon.Button>
+          <Icon.Button
+            style={styles.button}
+            name="share">
+            Share
+          </Icon.Button>
+        </View>
+        <View style={styles.messageBox}>
+          <View style={styles.rowView}>
+            <TextInput
+              onChangeText={text => this.state.input=text}
+            />
+            <Icon.Button
+              style={styles.send}
+              name="send"
+              onPress={this.sendButton()}
+            />
+          </View>
         </View>
       </ScrollView>
     </View>);
-  };
+  }
+  
+}
 
 export default KryptorActivity
