@@ -36,17 +36,37 @@ const styles = StyleSheet.create(
   },
   send:
   {
-    paddingLeft: 15,
+    alignSelf: "flex-end",
+    //marginRight: 15,
+    //marginLeft: 15,
     flex: 1,
     backgroundColor: "#00334C"
   },
   messageBox:
   {
-    //position: 'absolute',
-    //height: 40,
-    //left: 0, 
-    //top: Dimensions.get("window").height - 40, 
-    //width: Dimensions.get(window).width
+    width: Dimensions.get("window").width,
+    position: 'absolute',
+    bottom: 0,
+    left: 0
+  },
+  textInput:
+  {
+    alignSelf: "flex-start",
+    paddingLeft: 15,
+    paddingRight: 5,
+    //width: (Dimensions.get('window').width - 60)
+  },
+  textOutput:
+  {
+    backgroundColor: '#00334C',
+    height: 250,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  scrollStyle:
+  {
+    height: Dimensions.get("window").height - 20,
   }
 });
 

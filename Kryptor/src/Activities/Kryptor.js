@@ -3,12 +3,11 @@ import React from 'react';
 import { Component } from 'react';
 
 import {
-  TouchableHighlight,
   View,
   StatusBar,
   Text,
-  Button
 } from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -32,7 +31,7 @@ class KryptorActivity extends Component
     this.setState({decryption: value})
   }
 
-  sendButton(){this.kryptoFunction()}
+  sendButton(){ this.kryptoFunction() }
 
   kryptoFunction = async() => {
     var result = ""
@@ -58,20 +57,25 @@ class KryptorActivity extends Component
         console.error(error)
       }
     }
-    console.log("Triggered");
     this.setState(
       {
         output: result,
         input: ""
       }
     )
+    this.textInput.clear()
+  }
+
+  copyButton()
+  {
+    Clipboard.setString(this.state.output)
   }
 
   render()
   {
     return (
     <View style = {styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.scrollStyle}>
         <StatusBar backgroundColor='#00334C'/>
         <View style={styles.rowView}>
           <Text style={styles.switch}>{this.state.decryption ? 'Decryption' : 'Encryption'}</Text>
@@ -80,13 +84,14 @@ class KryptorActivity extends Component
             switchValue={this.state.decryption}
           />
         </View>
-        <View>
+        <ScrollView style={styles.textOutput}>
           <Text>{this.state.output}</Text>
-        </View>
+        </ScrollView>
         <View style={styles.rowView}>
           <Icon.Button
             style={styles.button}
-             name="copy">
+            name="copy"
+            onPress={() => this.copyButton()}>
              Copy
           </Icon.Button>
           <Icon.Button
@@ -95,19 +100,22 @@ class KryptorActivity extends Component
             Share
           </Icon.Button>
         </View>
-        <View style={styles.messageBox}>
+      </ScrollView>
+      <View style={styles.messageBox}>
           <View style={styles.rowView}>
             <TextInput
+              style={styles.textInput}
+              ref={input => {this.textInput = input}}
               onChangeText={text => this.state.input=text}
+              placeholder="Enter Message"
             />
             <Icon.Button
               style={styles.send}
               name="send"
-              onPress={this.sendButton()}
+              onPress={() => this.sendButton()}
             />
           </View>
         </View>
-      </ScrollView>
     </View>);
   }
   
