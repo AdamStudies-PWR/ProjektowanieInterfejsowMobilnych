@@ -3,9 +3,11 @@ import React from 'react';
 import { Component } from 'react';
 
 import {
+  Share,
   View,
   StatusBar,
   Text,
+  ToastAndroid,
 } from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
@@ -69,6 +71,28 @@ class KryptorActivity extends Component
   copyButton()
   {
     Clipboard.setString(this.state.output)
+    ToastAndroid.show("Copied !", ToastAndroid.SHORT)
+  }
+
+  shareButton() { this.shareFunction() }
+
+  shareFunction = async() => {
+    try
+    {
+      const result = await Share.share(
+      {
+        message: this.state.output,
+      })
+      if (result.action === Share.sharedAction)
+      {
+        if (result.activityType) {} 
+        else {}
+      } else if (result.action === Share.dismissedAction) {}
+    }
+    catch (error)
+    {
+      alert(error.message)
+    }
   }
 
   render()
@@ -96,7 +120,8 @@ class KryptorActivity extends Component
           </Icon.Button>
           <Icon.Button
             style={styles.button}
-            name="share">
+            name="share"
+            onPress={() => this.shareButton()}>
             Share
           </Icon.Button>
         </View>

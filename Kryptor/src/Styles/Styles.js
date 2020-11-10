@@ -67,6 +67,23 @@ const styles = StyleSheet.create(
   scrollStyle:
   {
     height: Dimensions.get("window").height - 20,
+  },
+  comboBox:
+  {
+    flex: 1,
+    marginLeft: 5,
+    marginRight: 30
+  },
+  picker:
+  {
+    flex: 1,
+    paddingLeft: 30,
+    paddingRight: 30,
+    paddingTop: 18
+  },
+  button2:
+  {
+    paddingTop: 40,
   }
 });
 
