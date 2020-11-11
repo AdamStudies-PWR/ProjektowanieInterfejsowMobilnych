@@ -7,7 +7,8 @@ import {
   View,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import styles from '../Styles/Styles.js';
 import { Component } from 'react';
@@ -21,8 +22,10 @@ class SettingsActivity extends Component
     this.state = {
       mode: 'Encryption',
       language: 'English',
-      theme: 'Deep Blue'
+      theme: 'Deep Blue',
+      auto_copy: false
     }
+    this.loadCopySettings()
   }
 
   handleMode(index, chosen)
@@ -43,6 +46,44 @@ class SettingsActivity extends Component
     console.log("Chosen: " + index)
   }
 
+  copySwitch = (value) => {
+    this.setState({auto_copy: value})
+    if (value) this.saveSetting("copySettings", "1")
+    else this.saveSetting("copySettings", "0")
+  }
+
+  saveSetting = async(key, value) => {
+    try
+    {
+      await AsyncStorage.setItem(key, value)
+    }
+    catch (error)
+    {
+      alert(error.message)
+    }
+    console.log("Saved: " + value)
+  }
+
+  loadCopySettings = async() => {
+    var result
+    try
+    {
+      result = await AsyncStorage.getItem("copySettings")
+      if (result !== null)
+      {
+        if (result !== "1") result = false
+        else result = true
+      }
+      else result = false
+    }
+    catch (error)
+    {
+      alert(error.message)
+    }
+    this.setState({ auto_copy: result })
+  }
+
+
   render()
   {
     return (
@@ -51,7 +92,8 @@ class SettingsActivity extends Component
         <View style={styles.rowView}>
           <Text style={styles.switch}>Auto copy</Text>
           <MySwitch
-            // Do uzupełnienia!
+            toggleSwitch={this.copySwitch}
+            switchValue={this.state.auto_copy}
           />
         </View>
         <View style={styles.rowView}>

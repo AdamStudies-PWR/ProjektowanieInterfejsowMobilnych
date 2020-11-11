@@ -78,7 +78,6 @@ const styles = StyleSheet.create(
   {
     flex: 1,
     paddingLeft: 30,
-    paddingRight: 30,
     paddingTop: 18
   },
   button2:

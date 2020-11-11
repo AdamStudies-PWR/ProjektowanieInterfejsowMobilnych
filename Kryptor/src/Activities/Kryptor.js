@@ -12,6 +12,8 @@ import {
 import Clipboard from '@react-native-community/clipboard';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
+import AsyncStorage from '@react-native-community/async-storage';
+import { NavigationEvents } from 'react-navigation';
 
 import styles from '../Styles/Styles.js'
 import MySwitch from '../Components/mySwitch.js'
@@ -25,12 +27,34 @@ class KryptorActivity extends Component
     this.state = {
       decryption: false,
       output: "",
-      input: ""
+      input: "",
+      auto_copy: false
     }
+    this.loadCopySettings()
   }
 
   toggleMode = (value) => {
     this.setState({decryption: value})
+  }
+
+  loadCopySettings = async() => {
+    var result
+    try
+    {
+      result = await AsyncStorage.getItem("copySettings")
+      if (result !== null)
+      {
+        if (result !== "1") result = false
+        else result = true
+      }
+      else result = false
+    }
+    catch (error)
+    {
+      alert(error.message)
+    }
+    this.setState({ auto_copy: result })
+    console.log("Read: " + result)
   }
 
   sendButton(){ this.kryptoFunction() }
@@ -66,6 +90,7 @@ class KryptorActivity extends Component
       }
     )
     this.textInput.clear()
+    if (this.state.auto_copy) this.copyButton();
   }
 
   copyButton()
