@@ -25,7 +25,7 @@ const KwiKryptorApp = ({}) =>
       <Stack.Navigator>
         <Stack.Screen
           name="KwiKryptor"
-          component={KryptorActivity}
+          //component={KryptorActivity}
           options={({navigation}) => ({
             headerTitleStyle: { alignSelf: 'center', textAlign: 'center', marginLeft: 60},
             headerStyle: {
@@ -37,8 +37,9 @@ const KwiKryptorApp = ({}) =>
                 backgroundColor="#00334C"
                 onPress={() => navigation.navigate('Settings')}
               />
-          ),})}
-        />
+          ),})}>
+            {props => <KryptorActivity {...props} extraData={false} />}
+        </Stack.Screen>            
         <Stack.Screen 
           name="Settings" 
           component={SettingsActivity}

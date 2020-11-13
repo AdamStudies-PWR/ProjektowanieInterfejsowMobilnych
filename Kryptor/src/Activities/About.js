@@ -14,9 +14,9 @@ import { Component } from 'react';
 
 class AboutActivity extends Component
 {
-  constructor()
+  constructor(props)
   {
-    super()
+    super(props)
     this.state = {
       appVersion: VersionNumber.appVersion,
       kryptoVersion: "unknown"
