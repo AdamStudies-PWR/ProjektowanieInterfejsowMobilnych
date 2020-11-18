@@ -27,13 +27,17 @@ class SettingsActivity extends Component
       auto_copy: false,
       auto_share: false,
       auto_delete: false, 
-      default_Index: 0
+      default_Index: 0,
+      language_Index: 0,
+      theme_Index: 0
     }
 
     this.loadCopySettings()
     this.loadShareSettings()
     this.loadDeleteSettings()
     this.loadDefaultSettings()
+    this.loadLanguageSettings()
+    this.loadThemeSettings()
   }
 
   handleMode(index, chosen)
@@ -47,12 +51,20 @@ class SettingsActivity extends Component
 
   handleLanguage(index, chosen)
   {
-    this.setState({ language: chosen })
+    this.setState(
+      { 
+        language: chosen,
+        language_Index: index
+      })
   }
 
   handleTheme(index, chosen)
   {
-    this.setState({ theme: chosen })
+    this.setState(
+      { 
+        theme: chosen,
+        theme_Index: index
+      })
   }
 
   copySwitch = (value) => {
@@ -119,7 +131,48 @@ class SettingsActivity extends Component
     {
       alert(error.message)
     }
+    console.log("Read: " + result)
     this.setState({ mode: result })
+  }
+
+  loadLanguageSettings = async() => {
+    var result
+    try
+    {
+      result = await AsyncStorage.getItem("language")
+      if (result !== null)
+      {
+        if (result !== "1") result = 'english'
+        else result = 'polish'
+      }
+      else result = 'english'
+    }
+    catch (error)
+    {
+      alert(error.message)
+    }
+    console.log("Read: " + result)
+    this.setState({ language: result })
+  }
+
+  loadThemeSettings = async() => {
+    var result
+    try
+    {
+      result = await AsyncStorage.getItem("theme")
+      if (result !== null)
+      {
+        if (result !== "1") result = 'deep_blue'
+        else result = 'bannana_white'
+      }
+      else result = 'deep_blue'
+    }
+    catch (error)
+    {
+      alert(error.message)
+    }
+    console.log("Read: " + result)
+    this.setState({ theme: result })
   }
 
   loadShareSettings = async() => {
@@ -163,6 +216,8 @@ class SettingsActivity extends Component
   applyButton()
   {
     this.saveSetting("defaultMode", this.state.default_Index.toString())
+    this.saveSetting("language", this.state.language_Index.toString())
+    this.saveSetting("theme", this.state.theme_Index.toString())
     this.props.navigation.goBack()
   }
 
