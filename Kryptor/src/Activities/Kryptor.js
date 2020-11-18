@@ -3,6 +3,7 @@ import React from 'react';
 import { Component } from 'react';
 
 import {
+  I18nManager,
   Share,
   View,
   StatusBar,
@@ -19,12 +20,39 @@ import styles from '../Styles/Styles.js'
 import MySwitch from '../Components/mySwitch.js'
 import Converter from '../modules/Converter.js';
 
+import * as RNLocalize from "react-native-localize";
+import i18n from "i18n-js";
+import memoize from "lodash.memoize";
+
+const translationGetters = {
+  en: () => require("../translations/en.json"),
+  pl: () => require("../translations/pl.json")
+};
+
+const translate = memoize(
+  (key, config) => i18n.t(key, config),
+  (key, config) => (config ? key + JSON.stringify(config) : key)
+);
+
+const setI18nConfig = () => {
+  const fallback = { languageTag: "en", isRTL: false };
+
+  const { languageTag, isRTL } =
+    RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
+    fallback;
+
+  translate.cache.clear();
+  I18nManager.forceRTL(isRTL);
+  i18n.translations = { [languageTag]: translationGetters[languageTag]() };
+  i18n.locale = languageTag;
+};
+
 class KryptorActivity extends Component 
 {
   constructor(props)
   {
     super(props)
-    this.props = props
+    setI18nConfig()
     this.state = {
       decryption: false,
       output: "",
@@ -171,7 +199,7 @@ class KryptorActivity extends Component
   copyButton()
   {
     Clipboard.setString(this.state.output)
-    ToastAndroid.show("Copied !", ToastAndroid.SHORT)
+    ToastAndroid.show(translate("message"), ToastAndroid.SHORT)
   }
 
   shareButton() { this.shareFunction() }
@@ -202,7 +230,7 @@ class KryptorActivity extends Component
       <ScrollView style={styles.scrollStyle}>
         <StatusBar backgroundColor='#00334C'/>
         <View style={styles.rowView}>
-          <Text style={styles.switch}>{this.state.decryption ? 'Decryption' : 'Encryption'}</Text>
+          <Text style={styles.switch}>{this.state.decryption ? translate("mode1") : translate("mode2")}</Text>
           <MySwitch
             toggleSwitch={this.toggleMode}
             switchValue={this.state.decryption}
@@ -216,13 +244,13 @@ class KryptorActivity extends Component
             style={styles.button}
             name="copy"
             onPress={() => this.copyButton()}>
-             Copy
+             {translate("copyb")}
           </Icon.Button>
           <Icon.Button
             style={styles.button}
             name="share"
             onPress={() => this.shareButton()}>
-            Share
+            {translate("shareb")}
           </Icon.Button>
         </View>
       </ScrollView>
@@ -232,7 +260,7 @@ class KryptorActivity extends Component
               style={styles.textInput}
               ref={input => {this.textInput = input}}
               onChangeText={text => this.state.input=text}
-              placeholder="Enter Message"
+              placeholder={translate("default")}
             />
             <Icon.Button
               style={styles.send}

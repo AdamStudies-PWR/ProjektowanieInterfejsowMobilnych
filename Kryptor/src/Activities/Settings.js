@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 
-import {
+import {  
   Button,
   Text,
   View,
@@ -14,11 +14,20 @@ import styles from '../Styles/Styles.js';
 import { Component } from 'react';
 import MySwitch from '../Components/mySwitch.js';
 
+import i18n from "i18n-js";
+import memoize from "lodash.memoize";
+
+const translate = memoize(
+  (key, config) => i18n.t(key, config),
+  (key, config) => (config ? key + JSON.stringify(config) : key)
+);
+
 class SettingsActivity extends Component
 {
   constructor(props)
   {
     super(props)
+    props.navigation.setOptions({title: translate("sett")})
 
     this.state = {
       mode: 'encryption',
@@ -227,64 +236,64 @@ class SettingsActivity extends Component
     <View style = { styles.container }>
       <ScrollView>    
         <View style={styles.rowView}>
-          <Text style={styles.switch}>Auto copy</Text>
+          <Text style={styles.switch}>{translate("copy")}</Text>
           <MySwitch
             toggleSwitch={this.copySwitch}
             switchValue={this.state.auto_copy}
           />
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.switch}>Auto share</Text>
+          <Text style={styles.switch}>{translate("share")}</Text>
           <MySwitch
             toggleSwitch={this.shareSwitch}
             switchValue={this.state.auto_share}
           />
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.switch}>Delete text</Text>
+          <Text style={styles.switch}>{translate("delete")}</Text>
           <MySwitch
             toggleSwitch={this.deleteSwitch}
             switchValue={this.state.auto_delete}
           />
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.picker}>Default mode</Text>
+          <Text style={styles.picker}>{translate("mode")}</Text>
           <Picker 
           selectedValue={this.state.mode}
           //selectedValue='decryption'
           style={styles.comboBox}
           mode='dropdown'
           onValueChange={(itemValue, itemIndex) => this.handleMode(itemIndex, itemValue)}>
-            <Picker.Item label="Encryption" value="encryption"/>
-            <Picker.Item label="Decryption" value="decryption"/>
+            <Picker.Item label={translate("mode2")} value="encryption"/>
+            <Picker.Item label={translate("mode1")} value="decryption"/>
           </Picker>
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.picker}>Default mode</Text>
+          <Text style={styles.picker}>{translate("lang")}</Text>
           <Picker
           name="Language"
           selectedValue={this.state.language}
           style={styles.comboBox}
           mode='dropdown'
           onValueChange={(itemValue, itemIndex) => this.handleLanguage(itemIndex, itemValue)}>
-            <Picker.Item label="English" value="english"/>
-            <Picker.Item label="Polish" value="polish"/>
+            <Picker.Item label={translate("lang1")} value="english"/>
+            <Picker.Item label={translate("lang2")} value="polish"/>
           </Picker>
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.picker}>Default mode</Text>
+          <Text style={styles.picker}>{translate("theme")}</Text>
           <Picker 
           selectedValue={this.state.theme}
           style={styles.comboBox}
           mode='dropdown'
           onValueChange={(itemValue, itemIndex) => this.handleTheme (itemIndex, itemValue)}>
-            <Picker.Item label="Deep blue" value="deep_blue"/>
-            <Picker.Item label="Bannana white" value="bannana_white"/>
+            <Picker.Item label={translate("theme1")} value="deep_blue"/>
+            <Picker.Item label={translate("theme2")} value="bannana_white"/>
           </Picker>
         </View>
         <Button
           style={styles.button2}
-          title="Apply"
+          title={translate("apply")}
           onPress={() => this.applyButton()}
         />
       </ScrollView>
