@@ -14,20 +14,14 @@ import styles from '../Styles/Styles.js';
 import { Component } from 'react';
 import MySwitch from '../Components/mySwitch.js';
 
-import i18n from "i18n-js";
-import memoize from "lodash.memoize";
-
-const translate = memoize(
-  (key, config) => i18n.t(key, config),
-  (key, config) => (config ? key + JSON.stringify(config) : key)
-);
+import strings from '../translations/translations'
 
 class SettingsActivity extends Component
 {
   constructor(props)
   {
     super(props)
-    props.navigation.setOptions({title: translate("sett")})
+    props.navigation.setOptions({title: strings.sett})
 
     this.state = {
       mode: 'encryption',
@@ -233,67 +227,67 @@ class SettingsActivity extends Component
   render()
   {
     return (
-    <View style = { styles.container }>
+    <View style = {styles.container}>
       <ScrollView>    
         <View style={styles.rowView}>
-          <Text style={styles.switch}>{translate("copy")}</Text>
+          <Text style={styles.switch}>{strings.copy}</Text>
           <MySwitch
             toggleSwitch={this.copySwitch}
             switchValue={this.state.auto_copy}
           />
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.switch}>{translate("share")}</Text>
+          <Text style={styles.switch}>{strings.share}</Text>
           <MySwitch
             toggleSwitch={this.shareSwitch}
             switchValue={this.state.auto_share}
           />
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.switch}>{translate("delete")}</Text>
+          <Text style={styles.switch}>{strings.delete}</Text>
           <MySwitch
             toggleSwitch={this.deleteSwitch}
             switchValue={this.state.auto_delete}
           />
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.picker}>{translate("mode")}</Text>
+          <Text style={styles.picker}>{strings.mode}</Text>
           <Picker 
           selectedValue={this.state.mode}
           //selectedValue='decryption'
           style={styles.comboBox}
           mode='dropdown'
           onValueChange={(itemValue, itemIndex) => this.handleMode(itemIndex, itemValue)}>
-            <Picker.Item label={translate("mode2")} value="encryption"/>
-            <Picker.Item label={translate("mode1")} value="decryption"/>
+            <Picker.Item label={strings.mode2} value="encryption"/>
+            <Picker.Item label={strings.mode1} value="decryption"/>
           </Picker>
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.picker}>{translate("lang")}</Text>
+          <Text style={styles.picker}>{strings.lang}</Text>
           <Picker
           name="Language"
           selectedValue={this.state.language}
           style={styles.comboBox}
           mode='dropdown'
           onValueChange={(itemValue, itemIndex) => this.handleLanguage(itemIndex, itemValue)}>
-            <Picker.Item label={translate("lang1")} value="english"/>
-            <Picker.Item label={translate("lang2")} value="polish"/>
+            <Picker.Item label={strings.lang1} value="english"/>
+            <Picker.Item label={strings.lang2} value="polish"/>
           </Picker>
         </View>
         <View style={styles.rowView}>
-          <Text style={styles.picker}>{translate("theme")}</Text>
+          <Text style={styles.picker}>{strings.theme}</Text>
           <Picker 
           selectedValue={this.state.theme}
           style={styles.comboBox}
           mode='dropdown'
           onValueChange={(itemValue, itemIndex) => this.handleTheme (itemIndex, itemValue)}>
-            <Picker.Item label={translate("theme1")} value="deep_blue"/>
-            <Picker.Item label={translate("theme2")} value="bannana_white"/>
+            <Picker.Item label={strings.theme1} value="deep_blue"/>
+            <Picker.Item label={strings.theme2} value="bannana_white"/>
           </Picker>
         </View>
         <Button
           style={styles.button2}
-          title={translate("apply")}
+          title={strings.apply }
           onPress={() => this.applyButton()}
         />
       </ScrollView>

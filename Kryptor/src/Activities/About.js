@@ -12,24 +12,18 @@ import styles from '../Styles/Styles.js';
 import Converter from '../modules/Converter.js';
 import { Component } from 'react';
 
-import i18n from "i18n-js";
-import memoize from "lodash.memoize";
-
-const translate = memoize(
-  (key, config) => i18n.t(key, config),
-  (key, config) => (config ? key + JSON.stringify(config) : key)
-);
+import strings from '../translations/translations'
 
 class AboutActivity extends Component
 {
   constructor(props)
   {
     super(props)
-    props.navigation.setOptions({title: translate("about")})
+    props.navigation.setOptions({title: strings.about})
 
     this.state = {
       appVersion: VersionNumber.appVersion,
-      kryptoVersion: translate("unknown")
+      kryptoVersion: strings.unknown
     }
     this.loadData()
   }
@@ -52,15 +46,15 @@ class AboutActivity extends Component
     <View style = { styles.container }>
       <ScrollView>    
         <View style={styles.rowView}>
-          <Text style = {styles.switch}>{translate("author")}</Text>
+          <Text style = {styles.switch}>{strings.author}</Text>
           <Text style = {styles.switch}>Adam Krizar 241276</Text>
         </View>
         <View style={styles.rowView}>
-          <Text style = {styles.switch}>{translate("engine")}</Text>
+          <Text style = {styles.switch}>{strings.engine}</Text>
           <Text style = {styles.switch}>{this.state.kryptoVersion}</Text>
         </View>
         <View style={styles.rowView}>
-          <Text style = {styles.switch}>{translate("app")}</Text>
+          <Text style = {styles.switch}>{strings.app}</Text>
           <Text style = {styles.switch}>{this.state.appVersion}</Text>
         </View>
       </ScrollView>

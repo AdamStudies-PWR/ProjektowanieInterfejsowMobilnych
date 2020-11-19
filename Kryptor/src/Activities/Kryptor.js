@@ -13,46 +13,19 @@ import {
 import Clipboard from '@react-native-community/clipboard';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
-import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import styles from '../Styles/Styles.js'
 import MySwitch from '../Components/mySwitch.js'
 import Converter from '../modules/Converter.js';
 
-import * as RNLocalize from "react-native-localize";
-import i18n from "i18n-js";
-import memoize from "lodash.memoize";
-
-const translationGetters = {
-  en: () => require("../translations/en.json"),
-  pl: () => require("../translations/pl.json")
-};
-
-const translate = memoize(
-  (key, config) => i18n.t(key, config),
-  (key, config) => (config ? key + JSON.stringify(config) : key)
-);
-
-const setI18nConfig = () => {
-  const fallback = { languageTag: "en", isRTL: false };
-
-  const { languageTag, isRTL } =
-    RNLocalize.findBestAvailableLanguage(Object.keys(translationGetters)) ||
-    fallback;
-
-  translate.cache.clear();
-  I18nManager.forceRTL(isRTL);
-  i18n.translations = { [languageTag]: translationGetters[languageTag]() };
-  i18n.locale = languageTag;
-};
+import strings from '../translations/translations'
 
 class KryptorActivity extends Component 
 {
   constructor(props)
   {
     super(props)
-    setI18nConfig()
     this.state = {
       decryption: false,
       output: "",
@@ -64,14 +37,35 @@ class KryptorActivity extends Component
     this.loadCopySettings()
     this.loadShareSettings()
     this.loadDeleteSettings()
-    this.loadDefaultSettings()
+    this.loadLanguageSettings()
   }
 
   unsubscribe = this.props.navigation.addListener('focus', () => {
     this.loadCopySettings()
     this.loadShareSettings()
     this.loadDeleteSettings()
+    this.loadLanguageSettings()
   })
+
+  loadLanguageSettings = async() => {
+    var result
+    try
+    {
+      result = await AsyncStorage.getItem("language")
+      if (result !== null)
+      {
+        if (result !== "1") result = 'en'
+        else result = 'pl'
+      }
+      else result = 'en'
+    }
+    catch (error)
+    {
+      alert(error.message)
+    }
+    strings.setLanguage(result)
+    this.setState({ lastRefresh: Date(Date.now()).toString() })
+  }
 
   toggleMode = (value) => {
     this.setState({decryption: value})
@@ -93,7 +87,6 @@ class KryptorActivity extends Component
     {
       alert(error.message)
     }
-    console.log("Read: " + result)
     this.setState({ decryption: result })
   }
 
@@ -199,7 +192,7 @@ class KryptorActivity extends Component
   copyButton()
   {
     Clipboard.setString(this.state.output)
-    ToastAndroid.show(translate("message"), ToastAndroid.SHORT)
+    ToastAndroid.show(strings.message, ToastAndroid.SHORT)
   }
 
   shareButton() { this.shareFunction() }
@@ -230,7 +223,7 @@ class KryptorActivity extends Component
       <ScrollView style={styles.scrollStyle}>
         <StatusBar backgroundColor='#00334C'/>
         <View style={styles.rowView}>
-          <Text style={styles.switch}>{this.state.decryption ? translate("mode1") : translate("mode2")}</Text>
+          <Text style={styles.switch}>{this.state.decryption ? strings.mode1 : strings.mode2}</Text>
           <MySwitch
             toggleSwitch={this.toggleMode}
             switchValue={this.state.decryption}
@@ -244,13 +237,13 @@ class KryptorActivity extends Component
             style={styles.button}
             name="copy"
             onPress={() => this.copyButton()}>
-             {translate("copyb")}
+             {strings.copyb}
           </Icon.Button>
           <Icon.Button
             style={styles.button}
             name="share"
             onPress={() => this.shareButton()}>
-            {translate("shareb")}
+            {strings.shareb}
           </Icon.Button>
         </View>
       </ScrollView>
@@ -260,7 +253,7 @@ class KryptorActivity extends Component
               style={styles.textInput}
               ref={input => {this.textInput = input}}
               onChangeText={text => this.state.input=text}
-              placeholder={translate("default")}
+              placeholder={strings.default}
             />
             <Icon.Button
               style={styles.send}
