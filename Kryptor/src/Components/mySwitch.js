@@ -7,10 +7,12 @@ import styles from '../Styles/Styles.js'
 
 export default MySwitch = (props) => {
    return (
-      <View style = {styles.switch}>
+      <View>
          <Switch
          onValueChange = {props.toggleSwitch}
          value = {props.switchValue}/>
       </View>
    )
 }
+
+//  style = {styles.switch}

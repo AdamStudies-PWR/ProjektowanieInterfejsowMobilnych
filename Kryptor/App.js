@@ -16,6 +16,11 @@ import KryptorActivity from './src/Activities/Kryptor.js'
 import SettingsActivity from './src/Activities/Settings.js'
 import AboutActivity from './src/Activities/About.js'
 
+import { useTheme } from "react-native-themed-styles"
+import design from './src/Styles/Styles.js';
+
+const [styles] = useTheme(design)
+
 const Stack = createStackNavigator();
 
 const KwiKryptorApp = ({}) =>
@@ -28,13 +33,11 @@ const KwiKryptorApp = ({}) =>
           //component={KryptorActivity}
           options={({navigation}) => ({
             headerTitleStyle: { alignSelf: 'center', textAlign: 'center', marginLeft: 60},
-            headerStyle: {
-              backgroundColor: '#00334C',
-            },
+            headerStyle: styles.header,
             headerRight: () => (
               <Icon.Button
                 name="settings"
-                backgroundColor="#00334C"
+                style={styles.header}
                 onPress={() => navigation.navigate('Settings')}
               />
           ),})}>
@@ -45,13 +48,11 @@ const KwiKryptorApp = ({}) =>
           //component={SettingsActivity}
           options={({navigation}) => ({
             headerTitleStyle: { alignSelf: 'center' },
-            headerStyle: {
-              backgroundColor: '#00334C',
-            },
+            headerStyle: styles.header,
             headerRight: () => (
               <Icon.Button
                 name="help-circle"
-                backgroundColor="#00334C"
+                style={styles.header}
                 onPress={() => navigation.navigate('About')}
               />            
           ),})}>
@@ -62,9 +63,8 @@ const KwiKryptorApp = ({}) =>
           component={AboutActivity}
           options={({}) => ({
             headerTitleStyle: { alignSelf: 'center', textAlign: 'center', marginRight: 55 },
-            headerStyle: {
-              backgroundColor: '#00334C',
-          },})}
+            headerStyle: styles.header,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>

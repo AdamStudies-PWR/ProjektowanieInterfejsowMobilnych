@@ -1,0 +1,222 @@
+diff --git a/Kryptor/package-lock.json b/Kryptor/package-lock.json
+index ad86907..56e9cdc 100644
+--- a/Kryptor/package-lock.json
++++ b/Kryptor/package-lock.json
+@@ -11649,6 +11649,12 @@
+       "resolved": "https://registry.npmjs.org/react-native-screens/-/react-native-screens-2.11.0.tgz",
+       "integrity": "sha512-vJzJE3zI1XUtqthrX3Dh2TBQWB+xFyaGhF52KBq9FjJUN5ws4xpLZJxBWa1KbGV3DilmcSZ4jmZR5LGordwE7w=="
+     },
++    "react-native-themed-styles": {
++      "version": "0.0.4",
++      "resolved": "https://registry.npmjs.org/react-native-themed-styles/-/react-native-themed-styles-0.0.4.tgz",
++      "integrity": "sha512-uhGmgbew2t+ChMc6mQliNSJ4szFkkgaQxQwXsAtjgMHNJyrX1dGgGTSJtEnjzSP6AMt5WanOn2pBv3ylZzRnBQ==",
++      "dev": true
++    },
+     "react-native-toast-message": {
+       "version": "1.3.4",
+       "resolved": "https://registry.npmjs.org/react-native-toast-message/-/react-native-toast-message-1.3.4.tgz",
+diff --git a/Kryptor/package.json b/Kryptor/package.json
+index 5ae0889..d8a836d 100644
+--- a/Kryptor/package.json
++++ b/Kryptor/package.json
+@@ -42,6 +42,7 @@
+     "eslint": "^7.11.0",
+     "jest": "^26.6.0",
+     "metro-react-native-babel-preset": "^0.63.0",
++    "react-native-themed-styles": "0.0.4",
+     "react-test-renderer": "16.13.1"
+   },
+   "jest": {
+diff --git a/Kryptor/src/Activities/About.js b/Kryptor/src/Activities/About.js
+index 91a6d0b..f633f41 100644
+--- a/Kryptor/src/Activities/About.js
++++ b/Kryptor/src/Activities/About.js
+@@ -7,12 +7,15 @@ import {
+   View
+ } from 'react-native';
+ import { ScrollView } from 'react-native-gesture-handler';
++import { useTheme } from "react-native-themed-styles"
+ 
+-import styles from '../Styles/Styles.js';
+ import Converter from '../modules/Converter.js';
+ import { Component } from 'react';
+ 
+ import strings from '../translations/translations'
++import design from '../Styles/Styles.js';
++
++const [styles] = useTheme(design)
+ 
+ class AboutActivity extends Component
+ {
+diff --git a/Kryptor/src/Activities/Kryptor.js b/Kryptor/src/Activities/Kryptor.js
+index d856a87..0d31cc9 100644
+--- a/Kryptor/src/Activities/Kryptor.js
++++ b/Kryptor/src/Activities/Kryptor.js
+@@ -3,7 +3,6 @@ import React from 'react';
+ import { Component } from 'react';
+ 
+ import {
+-  I18nManager,
+   Share,
+   View,
+   StatusBar,
+@@ -15,11 +14,14 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
+ import Icon from 'react-native-vector-icons/Feather';
+ import AsyncStorage from '@react-native-community/async-storage';
+ 
+-import styles from '../Styles/Styles.js'
+ import MySwitch from '../Components/mySwitch.js'
+ import Converter from '../modules/Converter.js';
+ 
+ import strings from '../translations/translations'
++import { useTheme } from "react-native-themed-styles"
++import design from '../Styles/Styles.js';
++
++const [styles] = useTheme(design)
+ 
+ class KryptorActivity extends Component 
+ {
+@@ -38,6 +40,10 @@ class KryptorActivity extends Component
+     this.loadShareSettings()
+     this.loadDeleteSettings()
+     this.loadLanguageSettings()
++
++    this.theme = light
++
++    //const [styles] = useTheme(design["bananaWhite"])
+   }
+ 
+   unsubscribe = this.props.navigation.addListener('focus', () => {
+diff --git a/Kryptor/src/Activities/Settings.js b/Kryptor/src/Activities/Settings.js
+index b680f51..1838733 100644
+--- a/Kryptor/src/Activities/Settings.js
++++ b/Kryptor/src/Activities/Settings.js
+@@ -9,12 +9,14 @@ import {
+ import { ScrollView } from 'react-native-gesture-handler';
+ import { Picker } from '@react-native-picker/picker';
+ import AsyncStorage from '@react-native-community/async-storage';
+-
+-import styles from '../Styles/Styles.js';
++import { useTheme } from "react-native-themed-styles"
+ import { Component } from 'react';
+ import MySwitch from '../Components/mySwitch.js';
+ 
+ import strings from '../translations/translations'
++import design from '../Styles/Styles.js';
++
++const [styles] = useTheme(design)
+ 
+ class SettingsActivity extends Component
+ {
+@@ -166,7 +168,7 @@ class SettingsActivity extends Component
+       if (result !== null)
+       {
+         if (result !== "1") result = 'deep_blue'
+-        else result = 'bannana_white'
++        else result = 'banana_white'
+       }
+       else result = 'deep_blue'
+     }
+@@ -282,7 +284,7 @@ class SettingsActivity extends Component
+           mode='dropdown'
+           onValueChange={(itemValue, itemIndex) => this.handleTheme (itemIndex, itemValue)}>
+             <Picker.Item label={strings.theme1} value="deep_blue"/>
+-            <Picker.Item label={strings.theme2} value="bannana_white"/>
++            <Picker.Item label={strings.theme2} value="banana_white"/>
+           </Picker>
+         </View>
+         <Button
+diff --git a/Kryptor/src/Components/mySwitch.js b/Kryptor/src/Components/mySwitch.js
+index 27fc25a..b9cc588 100644
+--- a/Kryptor/src/Components/mySwitch.js
++++ b/Kryptor/src/Components/mySwitch.js
+@@ -7,10 +7,12 @@ import styles from '../Styles/Styles.js'
+ 
+ export default MySwitch = (props) => {
+    return (
+-      <View style = {styles.switch}>
++      <View>
+          <Switch
+          onValueChange = {props.toggleSwitch}
+          value = {props.switchValue}/>
+       </View>
+    )
+-}
+\ No newline at end of file
++}
++
++//  style = {styles.switch}
+diff --git a/Kryptor/src/Styles/Styles.js b/Kryptor/src/Styles/Styles.js
+index 7c5f8bd..3268f09 100644
+--- a/Kryptor/src/Styles/Styles.js
++++ b/Kryptor/src/Styles/Styles.js
+@@ -1,14 +1,16 @@
+ import {
+   Dimensions,
+-  StyleSheet
+ } from 'react-native';
+ 
+-const styles = StyleSheet.create(
++import { styleSheetFactory } from "./Themes"
++
++
++const design = styleSheetFactory(theme => (
+ {
+   container:
+   {
+     flex: 1,
+-    backgroundColor: '#00425C'
++    backgroundColor: theme.backgroundColor
+   },
+   switch:
+   {
+@@ -31,7 +33,7 @@ const styles = StyleSheet.create(
+     paddingRight: 15,
+     marginLeft: 10,
+     marginRight: 10,
+-    backgroundColor: "#00334C",
++    backgroundColor: theme.buttonBackground,
+     borderStartColor: "green"
+   },
+   send:
+@@ -40,7 +42,7 @@ const styles = StyleSheet.create(
+     //marginRight: 15,
+     //marginLeft: 15,
+     flex: 1,
+-    backgroundColor: "#00334C"
++    backgroundColor: theme.buttonBackground
+   },
+   messageBox:
+   {
+@@ -58,7 +60,7 @@ const styles = StyleSheet.create(
+   },
+   textOutput:
+   {
+-    backgroundColor: '#00334C',
++    backgroundColor: theme.buttonBackground,
+     height: 250,
+     marginTop: 20,
+     marginLeft: 20,
+@@ -84,6 +86,6 @@ const styles = StyleSheet.create(
+   {
+     paddingTop: 40,
+   }
+-});
++}))
+ 
+-export default styles
+\ No newline at end of file
++export default design
+diff --git a/Kryptor/src/translations/en.json b/Kryptor/src/translations/en.json
+index af74943..53b8173 100644
+--- a/Kryptor/src/translations/en.json
++++ b/Kryptor/src/translations/en.json
+@@ -11,7 +11,7 @@
+     "lang2": "Polish",
+     "theme": "Theme",
+     "theme1": "Deep blue",
+-    "theme2": "Bannana white",
++    "theme2": "Banana white",
+     "apply": "Apply",
+     "about": "About",
+     "unknown": "unkown",

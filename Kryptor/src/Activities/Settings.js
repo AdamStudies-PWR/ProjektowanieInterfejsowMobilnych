@@ -9,12 +9,14 @@ import {
 import { ScrollView } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-picker/picker';
 import AsyncStorage from '@react-native-community/async-storage';
-
-import styles from '../Styles/Styles.js';
+import { useTheme } from "react-native-themed-styles"
 import { Component } from 'react';
 import MySwitch from '../Components/mySwitch.js';
 
 import strings from '../translations/translations'
+import design from '../Styles/Styles.js';
+
+const [styles] = useTheme(design)
 
 class SettingsActivity extends Component
 {
@@ -166,7 +168,7 @@ class SettingsActivity extends Component
       if (result !== null)
       {
         if (result !== "1") result = 'deep_blue'
-        else result = 'bannana_white'
+        else result = 'banana_white'
       }
       else result = 'deep_blue'
     }
@@ -282,7 +284,7 @@ class SettingsActivity extends Component
           mode='dropdown'
           onValueChange={(itemValue, itemIndex) => this.handleTheme (itemIndex, itemValue)}>
             <Picker.Item label={strings.theme1} value="deep_blue"/>
-            <Picker.Item label={strings.theme2} value="bannana_white"/>
+            <Picker.Item label={strings.theme2} value="banana_white"/>
           </Picker>
         </View>
         <Button

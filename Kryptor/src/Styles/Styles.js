@@ -1,14 +1,21 @@
 import {
   Dimensions,
-  StyleSheet
 } from 'react-native';
 
-const styles = StyleSheet.create(
+import { styleSheetFactory } from "./Themes"
+
+
+const design = styleSheetFactory(theme => (
 {
+  header:
+  {
+    backgroundColor: theme.buttonBackground
+  },
   container:
   {
     flex: 1,
-    backgroundColor: '#00425C'
+    backgroundColor: theme.backgroundColor,
+    theme: "light"
   },
   switch:
   {
@@ -31,8 +38,8 @@ const styles = StyleSheet.create(
     paddingRight: 15,
     marginLeft: 10,
     marginRight: 10,
-    backgroundColor: "#00334C",
-    borderStartColor: "green"
+    backgroundColor: theme.buttonBackground,
+    //borderStartColor: "green"
   },
   send:
   {
@@ -40,7 +47,7 @@ const styles = StyleSheet.create(
     //marginRight: 15,
     //marginLeft: 15,
     flex: 1,
-    backgroundColor: "#00334C"
+    backgroundColor: theme.buttonBackground
   },
   messageBox:
   {
@@ -58,7 +65,7 @@ const styles = StyleSheet.create(
   },
   textOutput:
   {
-    backgroundColor: '#00334C',
+    backgroundColor: theme.buttonBackground,
     height: 250,
     marginTop: 20,
     marginLeft: 20,
@@ -84,6 +91,6 @@ const styles = StyleSheet.create(
   {
     paddingTop: 40,
   }
-});
+}))
 
-export default styles
+export default design

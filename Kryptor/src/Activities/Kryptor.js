@@ -3,7 +3,6 @@ import React from 'react';
 import { Component } from 'react';
 
 import {
-  I18nManager,
   Share,
   View,
   StatusBar,
@@ -15,11 +14,14 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import styles from '../Styles/Styles.js'
 import MySwitch from '../Components/mySwitch.js'
 import Converter from '../modules/Converter.js';
 
 import strings from '../translations/translations'
+import { useTheme } from "react-native-themed-styles"
+import design from '../Styles/Styles.js';
+
+const [styles] = useTheme(design)
 
 class KryptorActivity extends Component 
 {
@@ -32,12 +34,16 @@ class KryptorActivity extends Component
       input: "",
       auto_copy: false,
       auto_share: false,
-      auto_delete: false
+      auto_delete: false,
+      theme: true
     }
     this.loadCopySettings()
     this.loadShareSettings()
     this.loadDeleteSettings()
     this.loadLanguageSettings()
+    this.loadThemeSettings()
+
+    //const [styles] = useTheme(design["bananaWhite"])
   }
 
   unsubscribe = this.props.navigation.addListener('focus', () => {
@@ -45,6 +51,7 @@ class KryptorActivity extends Component
     this.loadShareSettings()
     this.loadDeleteSettings()
     this.loadLanguageSettings()
+    this.loadThemeSettings()
   })
 
   loadLanguageSettings = async() => {
@@ -147,6 +154,24 @@ class KryptorActivity extends Component
     this.setState({ auto_share: result })
   }
 
+  loadThemeSettings = async() => {
+    var result
+    try
+    {
+      result = await AsyncStorage.getItem("theme")
+      if (result !== null)
+      {
+        if (result !== "1") result = true
+        else result = false
+      }
+      else result = true
+    }
+    catch (error)
+    {
+      alert(error.message)
+    }
+    this.setState({ theme: result })
+  }
 
   sendButton(){ this.kryptoFunction() }
 
@@ -219,9 +244,9 @@ class KryptorActivity extends Component
   render()
   {
     return (
-    <View style = {styles.container}>
+    <View style={styles.container}>
       <ScrollView style={styles.scrollStyle}>
-        <StatusBar backgroundColor='#00334C'/>
+        <StatusBar backgroundColor={this.state.theme ? '#00334C' : '#ffff00'}/>
         <View style={styles.rowView}>
           <Text style={styles.switch}>{this.state.decryption ? strings.mode1 : strings.mode2}</Text>
           <MySwitch

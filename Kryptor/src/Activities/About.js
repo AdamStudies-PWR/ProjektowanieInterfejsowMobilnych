@@ -7,12 +7,15 @@ import {
   View
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { useTheme } from "react-native-themed-styles"
 
-import styles from '../Styles/Styles.js';
 import Converter from '../modules/Converter.js';
 import { Component } from 'react';
 
 import strings from '../translations/translations'
+import design from '../Styles/Styles.js';
+
+const [styles] = useTheme(design)
 
 class AboutActivity extends Component
 {
