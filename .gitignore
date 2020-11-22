@@ -40,14 +40,9 @@ app.*.symbols
 # Obfuscation related
 app.*.map.json
 
-# Android Studio will place build artifacts here
-kryptor/android/app/debug
-kryptor/android/app/profile
-kryptor/android/app/release
-
 # Flutter
-kryptor/android/.gradle
-kryptor/android/gradle
-kryptor/android/local.properties
-kryptor/ios
-kryptor/build
+/kryptor3/android/.gradle
+/kryptor3/android/gradle
+/kryptor3/android/local.properties
+/kryptor3/ios
+/kryptor3/build
