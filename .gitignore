@@ -46,3 +46,9 @@ app.*.map.json
 /kryptor3/android/local.properties
 /kryptor3/ios
 /kryptor3/build
+/kryptor3/.metadata
+/kryptor3/android/build.gradle
+/kryptor3/android/gradle.properties
+/kryptor3/android/gradlew
+/kryptor3/android/gradlew.bat
+/kryptor3/android/settings.gradle
