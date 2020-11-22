@@ -1,4 +1,7 @@
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'settings.dart';
 
 class KryptoScreen extends StatefulWidget {
   KryptoScreen({Key key, this.title}) : super(key: key);
@@ -23,6 +26,13 @@ class KryptoScreenState extends State<KryptoScreen> {
     });
   }
 
+  void openSetting() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SettingsScreen()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -35,7 +45,16 @@ class KryptoScreenState extends State<KryptoScreen> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Center(child: Text(widget.title)),
+        title: Center(
+          child: Padding(
+              padding: EdgeInsets.only(left: 40.0), child: Text(widget.title)),
+        ),
+        actions: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child:
+                  GestureDetector(onTap: openSetting, child: Icon(Icons.settings))),
+        ],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
