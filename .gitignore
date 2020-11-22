@@ -46,8 +46,8 @@ kryptor/android/app/profile
 kryptor/android/app/release
 
 # Flutter
-./kryptor/android/.gradle
-./kryptor/android/gradle
-./kryptor/android/local.properties
-./kryptor/ios
-./kryptor/build
+kryptor/android/.gradle
+kryptor/android/gradle
+kryptor/android/local.properties
+kryptor/ios
+kryptor/build
