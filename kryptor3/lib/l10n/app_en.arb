@@ -1,4 +1,10 @@
 {
     "settings": "Settings",
-    "about": "About"
+    "about": "About",
+    "copySwitch": "Auto copy",
+    "shareSwitch": "Auto share",
+    "deleteSwitch": "Remove text",
+    "defaultMode": "Default mode",
+    "encryption": "Encryption",
+    "decryption": "Decryption"
 }

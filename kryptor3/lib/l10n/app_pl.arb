@@ -1,4 +1,13 @@
 {
     "settings": "Ustawienia",
-    "about": "Informacje"
+    "about": "Informacje",
+    "copySwitch": "Auto kopiowanie",
+    "shareSwitch": "Auto udostępnianie",
+    "deleteSwitch": "Usuń tekts",
+    "defaultMode": "Domyślny tryb",
+    "encryption": "Enkrypcja",
+    "decryption": "Dekryption",
+    "language": "Język",
+    "Theme": "Motyw",
+    "Light": "Light Green"
 }

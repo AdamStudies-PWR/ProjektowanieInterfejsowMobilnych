@@ -52,8 +52,8 @@ class KryptoScreenState extends State<KryptoScreen> {
         actions: <Widget>[
           Padding(
               padding: EdgeInsets.only(right: 10.0),
-              child:
-                  GestureDetector(onTap: openSetting, child: Icon(Icons.settings))),
+              child: GestureDetector(
+                  onTap: openSetting, child: Icon(Icons.settings))),
         ],
       ),
       body: Center(

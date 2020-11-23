@@ -10,13 +10,6 @@ class AboutScreen extends StatefulWidget {
 }
 
 class AboutScreenState extends State<AboutScreen> {
-  void openAbout() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AboutScreen()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -31,7 +24,8 @@ class AboutScreenState extends State<AboutScreen> {
         // the App.build method, and use it to set our appbar title.
         title: Center(
           child: Padding(
-              padding: EdgeInsets.only(right: 40.0), child: Text(AppLocalizations.of(context).about)),
+              padding: EdgeInsets.only(right: 40.0),
+              child: Text(AppLocalizations.of(context).about)),
         ),
       ),
       body: Center(),

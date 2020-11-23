@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +13,11 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class SettingsScreenState extends State<SettingsScreen> {
+  bool copySwitch = false;
+  bool shareSwitch = false;
+  bool deleteSwitch = false;
+
+  String defaultBox;
 
   void openAbout() {
     Navigator.push(
@@ -21,6 +28,7 @@ class SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    defaultBox = AppLocalizations.of(context).encryption;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -28,21 +36,166 @@ class SettingsScreenState extends State<SettingsScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Center(
-          child: Text(AppLocalizations.of(context).settings),
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Center(
+            child: Text(AppLocalizations.of(context).settings),
+          ),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: GestureDetector(
+                    onTap: openAbout, child: Icon(Icons.info_outline))),
+          ],
         ),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: GestureDetector(
-                  onTap: openAbout, child: Icon(Icons.info_outline))),
-        ],
-      ),
-      body: Center(
-      ),
-    );
+        body: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                    child: Text(AppLocalizations.of(context).copySwitch)),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
+                    alignment: Alignment(-1, 1),
+                    child: Switch(
+                      value: copySwitch,
+                      onChanged: (value) {
+                        setState(() {
+                          copySwitch = value;
+                        });
+                      },
+                    ))
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Text(AppLocalizations.of(context).shareSwitch)),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    alignment: Alignment(-1, 1),
+                    child: Switch(
+                      value: shareSwitch,
+                      onChanged: (value) {
+                        setState(() {
+                          shareSwitch = value;
+                        });
+                      },
+                    ))
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Text(AppLocalizations.of(context).deleteSwitch)),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    alignment: Alignment(-1, 1),
+                    child: Switch(
+                      value: copySwitch,
+                      onChanged: (value) {
+                        setState(() {
+                          shareSwitch = value;
+                        });
+                      },
+                    ))
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 40, 0, 0),
+                    child: Text(AppLocalizations.of(context).defaultMode)),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, 40, 40, 0),
+                    alignment: Alignment(-1, 1),
+                    child: DropdownButton<String>(
+                      value: defaultBox,
+                      icon: Icon(Icons.arrow_downward),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          defaultBox = newValue;
+                        });
+                      },
+                      items: <String>[
+                        AppLocalizations.of(context).encryption,
+                        AppLocalizations.of(context).decryption
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ))
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Text(AppLocalizations.of(context).defaultMode)),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
+                    alignment: Alignment(-1, 1),
+                    child: DropdownButton<String>(
+                      value: defaultBox,
+                      icon: Icon(Icons.arrow_downward),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          defaultBox = newValue;
+                        });
+                      },
+                      items: <String>[
+                        AppLocalizations.of(context).encryption,
+                        AppLocalizations.of(context).decryption
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ))
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                    child: Text(AppLocalizations.of(context).defaultMode)),
+                Container(
+                    padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
+                    alignment: Alignment(-1, 1),
+                    child: DropdownButton<String>(
+                      value: defaultBox,
+                      icon: Icon(Icons.arrow_downward),
+                      onChanged: (String newValue) {
+                        setState(() {
+                          defaultBox = newValue;
+                        });
+                      },
+                      items: <String>[
+                        AppLocalizations.of(context).encryption,
+                        AppLocalizations.of(context).decryption
+                      ].map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ))
+              ],
+            )
+          ],
+        ));
   }
 }
