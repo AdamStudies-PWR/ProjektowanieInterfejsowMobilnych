@@ -8,6 +8,12 @@
     "encryption": "Enkrypcja",
     "decryption": "Dekryption",
     "language": "Język",
-    "Theme": "Motyw",
-    "Light": "Light Green"
+    "theme": "Motyw",
+    "light": "Jasny Zielony",
+    "dark": "Purpurowy",
+    "apply": "Zastosuj",
+    "author": "Autor:",
+    "engine": "Wersja KryptoSilnika:",
+    "app": "Wersja Aplikacji:",
+    "hint": "Wprowadź wiadomość"
 }

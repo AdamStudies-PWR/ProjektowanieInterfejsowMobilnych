@@ -1,7 +1,10 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'settings.dart';
+
+import 'dart:developer' as developer;
 
 class KryptoScreen extends StatefulWidget {
   KryptoScreen({Key key, this.title}) : super(key: key);
@@ -13,18 +16,9 @@ class KryptoScreen extends StatefulWidget {
 }
 
 class KryptoScreenState extends State<KryptoScreen> {
-  int _counter = 0;
+  bool modeSwitch = false;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  String mode;
 
   void openSetting() {
     Navigator.push(
@@ -33,8 +27,19 @@ class KryptoScreenState extends State<KryptoScreen> {
     );
   }
 
+  void changeMode(bool value) {
+    setState(() {
+      (modeSwitch = value)
+          ? mode = AppLocalizations.of(context).decryption
+          : mode = AppLocalizations.of(context).encryption;
+    });
+
+    developer.log("Changed: " + mode, name: "info");
+  }
+
   @override
   Widget build(BuildContext context) {
+    mode = AppLocalizations.of(context).encryption;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -42,55 +47,54 @@ class KryptoScreenState extends State<KryptoScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Center(
-          child: Padding(
-              padding: EdgeInsets.only(left: 40.0), child: Text(widget.title)),
-        ),
-        actions: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: GestureDetector(
-                  onTap: openSetting, child: Icon(Icons.settings))),
-        ],
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Center(
+            child: Padding(
+                padding: EdgeInsets.only(left: 40.0),
+                child: Text(widget.title)),
+          ),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: GestureDetector(
+                    onTap: openSetting, child: Icon(Icons.settings))),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: Column(children: [
+          ListView(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            children: [
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
+                          child: Text(mode)),
+                      Container(
+                          padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
+                          child: Switch(
+                              value: modeSwitch,
+                              onChanged: (value) => changeMode(value)))
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
+          /*Row(
+            children: [
+              TextField(
+                  decoration: InputDecoration(
+                      border: InputBorder.none, hintText: "Kwi")),
+              RaisedButton(onPressed: null, child: Text("Send"))
+            ],
+          )*/
+        ]) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 }
