@@ -15,5 +15,7 @@
     "author": "Author:",
     "engine": "KryptoEngine version:",
     "app": "App version:",
-    "hint": "Enter Message"
+    "hint": "Enter Message",
+    "copy": "Copy",
+    "share": "Share"
 }

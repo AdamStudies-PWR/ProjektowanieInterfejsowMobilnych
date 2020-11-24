@@ -15,5 +15,7 @@
     "author": "Autor:",
     "engine": "Wersja KryptoSilnika:",
     "app": "Wersja Aplikacji:",
-    "hint": "Wprowadź wiadomość"
+    "hint": "Wprowadź wiadomość",
+    "copy": "Skopiuj",
+    "share": "Udostępnij"
 }
