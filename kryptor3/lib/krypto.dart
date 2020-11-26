@@ -1,6 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+
 import 'settings.dart';
 
 import 'dart:developer' as developer;
@@ -17,21 +18,7 @@ class KryptoScreen extends StatefulWidget {
 class KryptoScreenState extends State<KryptoScreen> {
   bool modeSwitch = false;
 
-  String mode = "unknown";
-
-  @override
-  void initState() {
-    super.initState();
-    initAsync();
-  }
-
-  initAsync() async {
-    setState(() {
-      mode = AppLocalizations.of(context).encryption;
-    });
-    
-    developer.log("message: " + mode, name: "IMPORTANT");
-  }
+  String mode;
 
   void openSetting() {
     Navigator.push(
@@ -50,6 +37,9 @@ class KryptoScreenState extends State<KryptoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    modeSwitch
+        ? mode = AppLocalizations.of(context).decryption
+        : mode = AppLocalizations.of(context).encryption;
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //

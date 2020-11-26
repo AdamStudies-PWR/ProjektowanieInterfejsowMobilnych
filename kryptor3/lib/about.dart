@@ -1,6 +1,8 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:package_info/package_info.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:async';
 
 import 'dart:developer' as developer;
 
@@ -12,7 +14,9 @@ class AboutScreen extends StatefulWidget {
 }
 
 class AboutScreenState extends State<AboutScreen> {
+  static const platform = const MethodChannel('com.amazeum.kryptor3/native');
   String version = "unknown";
+  String engine = "unknown";
 
   @override
   void initState() {
@@ -23,11 +27,18 @@ class AboutScreenState extends State<AboutScreen> {
   initAsync() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
 
+    String engineInfo;
+    try {
+      final String result = await platform.invokeMethod('getBatteryLevel');
+      engineInfo = result;
+    } on PlatformException catch (error) {
+      engineInfo = "Kotlin error";
+    }
+
     setState(() {
       version = packageInfo.version;
+      engine = engineInfo;
     });
-
-    developer.log("CHANGED: " + version, name: "IMPORTANT");
   }
 
   @override
@@ -65,7 +76,7 @@ class AboutScreenState extends State<AboutScreen> {
                   child: Text(AppLocalizations.of(context).engine)),
               Container(
                   padding: EdgeInsets.fromLTRB(100, 20, 0, 0),
-                  child: Text("TBA")),
+                  child: Text(engine)),
             ]),
             Row(children: [
               Container(
