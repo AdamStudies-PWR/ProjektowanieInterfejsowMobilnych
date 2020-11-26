@@ -1,5 +1,4 @@
 import 'package:flutter/rendering.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'settings.dart';
@@ -18,12 +17,20 @@ class KryptoScreen extends StatefulWidget {
 class KryptoScreenState extends State<KryptoScreen> {
   bool modeSwitch = false;
 
-  String mode;
+  String mode = "unknown";
 
   @override
   void initState() {
     super.initState();
-    mode = AppLocalizations.of(context).encryption;
+    initAsync();
+  }
+
+  initAsync() async {
+    setState(() {
+      mode = AppLocalizations.of(context).encryption;
+    });
+    
+    developer.log("message: " + mode, name: "IMPORTANT");
   }
 
   void openSetting() {
@@ -39,8 +46,6 @@ class KryptoScreenState extends State<KryptoScreen> {
           ? mode = AppLocalizations.of(context).decryption
           : mode = AppLocalizations.of(context).encryption;
     });
-
-    developer.log("Changed: " + mode, name: "info");
   }
 
   @override

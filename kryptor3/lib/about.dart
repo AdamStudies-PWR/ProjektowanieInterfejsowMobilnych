@@ -1,7 +1,8 @@
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:package_info/package_info.dart';
 import 'package:flutter/material.dart';
+
+import 'dart:developer' as developer;
 
 class AboutScreen extends StatefulWidget {
   AboutScreen({Key key}) : super(key: key);
@@ -25,6 +26,8 @@ class AboutScreenState extends State<AboutScreen> {
     setState(() {
       version = packageInfo.version;
     });
+
+    developer.log("CHANGED: " + version, name: "IMPORTANT");
   }
 
   @override
