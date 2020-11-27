@@ -15,8 +15,18 @@ class MainActivity : FlutterActivity() {
             call, result ->
             when (call.method) {
                 "getEngineVersion" -> {
-                    val batteryLevel = converter.version;
-                    result.success(batteryLevel);
+                    val version: String = converter.version;
+                    result.success(version);
+                }
+                "encryptText" -> {
+                    val text: String = call.argument<String>("message")!!;
+                    val output: String = converter.encryption(text);
+                    result.success(output);
+                }
+                "decryptText" -> {
+                    val text: String = call.argument<String>("message")!!;
+                    val output: String = converter.decryption(text);
+                    result.success(output);
                 }
                 else -> result.notImplemented();
             }

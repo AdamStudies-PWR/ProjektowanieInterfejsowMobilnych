@@ -17,5 +17,6 @@
     "app": "App version:",
     "hint": "Enter Message",
     "copy": "Copy",
-    "share": "Share"
+    "share": "Share",
+    "copied": "Copied!"
 }

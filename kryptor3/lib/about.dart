@@ -29,7 +29,7 @@ class AboutScreenState extends State<AboutScreen> {
 
     String engineInfo;
     try {
-      final String result = await platform.invokeMethod('getBatteryLevel');
+      final String result = await platform.invokeMethod('getEngineVersion');
       engineInfo = result;
     } on PlatformException catch (error) {
       engineInfo = "Kotlin error";

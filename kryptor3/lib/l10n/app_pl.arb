@@ -17,5 +17,6 @@
     "app": "Wersja Aplikacji:",
     "hint": "Wprowadź wiadomość",
     "copy": "Skopiuj",
-    "share": "Udostępnij"
+    "share": "Udostępnij",
+    "copied": "Skopiowano!"
 }
