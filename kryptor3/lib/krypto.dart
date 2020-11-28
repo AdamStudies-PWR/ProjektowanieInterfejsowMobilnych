@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:kryptor3/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,6 +26,7 @@ class KryptoScreenState extends State<KryptoScreen> {
   bool copySetting = false;
   bool shareSetting = false;
   bool deleteSetting = false;
+  bool darkTheme = false;
   bool startup = true;
 
   String mode;
@@ -43,18 +45,32 @@ class KryptoScreenState extends State<KryptoScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     setState(() {
-      modeSwitch = ((prefs.getInt('default') ?? 0) == 0) ? false : true;
       copySetting = (prefs.getBool('copy') ?? false);
       shareSetting = (prefs.getBool('share') ?? false);
       deleteSetting = (prefs.getBool('delete') ?? false);
+      darkTheme = ((prefs.getInt('theme') ?? 0) == 0) ? false : true;
     });
+
+    //updateTheme();
+
+    if (startup)
+      setState(() {
+        modeSwitch = ((prefs.getInt('default') ?? 0) == 0) ? false : true;
+      });
   }
 
-  void openSetting() {
-    Navigator.push(
+  void updateTheme() {
+    /*ThemeMode current = darkTheme ? ThemeMode.dark : ThemeMode.light;
+    if (current != myThemes.selectedTheme()) myThemes.switchTheme();*/
+  }
+
+  openSetting() async {
+    await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SettingsScreen()),
     );
+
+    loadPrefferences();
   }
 
   encrypt(String input) async {
@@ -70,6 +86,9 @@ class KryptoScreenState extends State<KryptoScreen> {
     setState(() {
       message = encrypted;
     });
+
+    if (copySetting) copyMessage();
+    if (shareSetting) shareMessage();
   }
 
   decrypt(String input) async {
@@ -85,6 +104,9 @@ class KryptoScreenState extends State<KryptoScreen> {
     setState(() {
       message = decrypted;
     });
+
+    if (copySetting) copyMessage();
+    if (shareSetting) shareMessage();
   }
 
   void handleMessage() {
@@ -93,8 +115,6 @@ class KryptoScreenState extends State<KryptoScreen> {
     modeSwitch ? decrypt(message) : encrypt(message);
 
     if (deleteSetting) textController.clear();
-    if (copySetting) copyMessage();
-    if (shareSetting) shareMessage();
   }
 
   void changeMode(bool value) {
@@ -113,6 +133,8 @@ class KryptoScreenState extends State<KryptoScreen> {
       Toast.show(info, context,
           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     }
+
+    myThemes.switchTheme();
   }
 
   void shareMessage() {
