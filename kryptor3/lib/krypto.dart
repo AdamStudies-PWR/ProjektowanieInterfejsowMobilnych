@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share/share.dart';
@@ -21,6 +22,10 @@ class KryptoScreen extends StatefulWidget {
 class KryptoScreenState extends State<KryptoScreen> {
   static const platform = const MethodChannel('com.amazeum.kryptor3/native');
   bool modeSwitch = false;
+  bool copySetting = false;
+  bool shareSetting = false;
+  bool deleteSetting = false;
+  bool startup = true;
 
   String mode;
   String message = "";
@@ -34,6 +39,16 @@ class KryptoScreenState extends State<KryptoScreen> {
     super.dispose();
   }
 
+  loadPrefferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      modeSwitch = ((prefs.getInt('default') ?? 0) == 0) ? false : true;
+      copySetting = (prefs.getBool('copy') ?? false);
+      shareSetting = (prefs.getBool('share') ?? false);
+      deleteSetting = (prefs.getBool('delete') ?? false);
+    });
+  }
 
   void openSetting() {
     Navigator.push(
@@ -76,6 +91,10 @@ class KryptoScreenState extends State<KryptoScreen> {
     String message = textController.text;
 
     modeSwitch ? decrypt(message) : encrypt(message);
+
+    if (deleteSetting) textController.clear();
+    if (copySetting) copyMessage();
+    if (shareSetting) shareMessage();
   }
 
   void changeMode(bool value) {
@@ -86,7 +105,7 @@ class KryptoScreenState extends State<KryptoScreen> {
     });
   }
 
-  void copyMessage(BuildContext context) {
+  void copyMessage() {
     if (message.isNotEmpty) {
       ClipboardData data = ClipboardData(text: message);
       Clipboard.setData(data);
@@ -107,7 +126,11 @@ class KryptoScreenState extends State<KryptoScreen> {
   @override
   Widget build(BuildContext context) {
     //AppLocalizations.load(Locale('en', ''));
-    info = AppLocalizations.of(context).copied;
+    if (startup) {
+      info = AppLocalizations.of(context).copied;
+      loadPrefferences();
+      startup = !startup;
+    }
     modeSwitch
         ? mode = AppLocalizations.of(context).decryption
         : mode = AppLocalizations.of(context).encryption;
@@ -171,7 +194,7 @@ class KryptoScreenState extends State<KryptoScreen> {
                         padding: EdgeInsets.fromLTRB(0, 20, 30, 0),
                         child: RaisedButton.icon(
                             icon: Icon(Icons.copy),
-                            onPressed: () => copyMessage(context),
+                            onPressed: () => copyMessage(),
                             label: Text(AppLocalizations.of(context).copy)))
                   ],
                 ),

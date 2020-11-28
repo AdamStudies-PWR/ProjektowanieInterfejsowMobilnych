@@ -1,7 +1,10 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+
 import 'krypto.dart';
+import 'settings.dart';
+import 'about.dart';
 
 void main() {
   runApp(MyApp());
@@ -37,6 +40,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
       ),
       home: KryptoScreen(title: 'Kryptor'),
+      routes: <String, WidgetBuilder> {
+        'KryptoScreen': (BuildContext context) => new KryptoScreen(title: 'Kryptor'),
+        'SettingsScreen' : (BuildContext context) => new SettingsScreen(),
+        'AboutScreen' : (BuildContext context) => new AboutScreen()
+      },
     );
   }
 }

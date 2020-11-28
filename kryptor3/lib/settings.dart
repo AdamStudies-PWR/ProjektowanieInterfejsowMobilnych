@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+
 import 'about.dart';
+
+import 'dart:developer' as developer;
 
 class SettingsScreen extends StatefulWidget {
   SettingsScreen({Key key}) : super(key: key);
@@ -15,10 +19,28 @@ class SettingsScreenState extends State<SettingsScreen> {
   bool copySwitch = false;
   bool shareSwitch = false;
   bool deleteSwitch = false;
+  bool startup = true;
 
-  String defaultBox;
-  String languageBox;
-  String themeBox;
+  String languageBox = "English";
+
+  var defaultBox = <String>[];
+  var themeBox = <String>[];
+
+  int defaultChoice = 0;
+  int themeChoice = 0;
+
+  loadPrefferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    setState(() {
+      languageBox = (prefs.getString('lang') ?? 'English');
+      defaultChoice = (prefs.getInt('default') ?? 0);
+      themeChoice = (prefs.getInt('theme') ?? 0);
+      copySwitch = (prefs.getBool('copy') ?? false);
+      shareSwitch = (prefs.getBool('share') ?? false);
+      deleteSwitch = (prefs.getBool('delete') ?? false);
+    });
+  }
 
   void openAbout() {
     Navigator.push(
@@ -27,11 +49,42 @@ class SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  saveSwitchSettings(String key) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    switch (key) {
+      case 'copy':
+        prefs.setBool(key, copySwitch);
+        break;
+      case 'share':
+        prefs.setBool(key, shareSwitch);
+        break;
+      case 'delete':
+        prefs.setBool(key, deleteSwitch);
+        break;
+    }
+  }
+
+  saveSettings() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('lang', languageBox);
+    prefs.setInt("default", defaultChoice);
+    prefs.setInt("theme", themeChoice);
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
-    defaultBox = AppLocalizations.of(context).encryption;
-    languageBox = "English";
-    themeBox = AppLocalizations.of(context).light;
+    if (startup) {
+      defaultBox.add(AppLocalizations.of(context).encryption);
+      defaultBox.add(AppLocalizations.of(context).decryption);
+      themeBox.add(AppLocalizations.of(context).light);
+      themeBox.add(AppLocalizations.of(context).dark);
+      loadPrefferences();
+      startup = !startup;
+    }
 
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -70,6 +123,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         setState(() {
                           copySwitch = value;
                         });
+                        saveSwitchSettings("copy");
                       },
                     ))
               ],
@@ -88,6 +142,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         setState(() {
                           shareSwitch = value;
                         });
+                        saveSwitchSettings("share");
                       },
                     ))
               ],
@@ -106,6 +161,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                         setState(() {
                           deleteSwitch = value;
                         });
+                        saveSwitchSettings("delete");
                       },
                     ))
               ],
@@ -119,17 +175,17 @@ class SettingsScreenState extends State<SettingsScreen> {
                 Container(
                     padding: EdgeInsets.fromLTRB(0, 40, 30, 0),
                     child: DropdownButton<String>(
-                      value: defaultBox,
+                      value: defaultChoice == null
+                          ? null
+                          : defaultBox[defaultChoice],
                       icon: Icon(Icons.arrow_downward),
                       onChanged: (String newValue) {
                         setState(() {
-                          defaultBox = newValue;
+                          defaultChoice = defaultBox.indexOf(newValue);
                         });
                       },
-                      items: <String>[
-                        AppLocalizations.of(context).encryption,
-                        AppLocalizations.of(context).decryption
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      items: defaultBox
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -173,17 +229,15 @@ class SettingsScreenState extends State<SettingsScreen> {
                 Container(
                     padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
                     child: DropdownButton<String>(
-                      value: themeBox,
+                      value: themeChoice == null ? null : themeBox[themeChoice],
                       icon: Icon(Icons.arrow_downward),
                       onChanged: (String newValue) {
                         setState(() {
-                          themeBox = newValue;
+                          themeChoice = themeBox.indexOf(newValue);
                         });
                       },
-                      items: <String>[
-                        AppLocalizations.of(context).light,
-                        AppLocalizations.of(context).dark
-                      ].map<DropdownMenuItem<String>>((String value) {
+                      items: themeBox
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
@@ -195,7 +249,7 @@ class SettingsScreenState extends State<SettingsScreen> {
             Container(
                 padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                 child: RaisedButton(
-                    onPressed: null,
+                    onPressed: saveSettings,
                     child: Text(AppLocalizations.of(context).apply)))
           ],
         )
@@ -203,156 +257,3 @@ class SettingsScreenState extends State<SettingsScreen> {
     );
   }
 }
-
-/*
-Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-                    child: Text(AppLocalizations.of(context).copySwitch)),
-                Container(
-                    padding: EdgeInsets.fromLTRB(0, 20, 20, 0),
-                    alignment: Alignment(-1, 1),
-                    child: Switch(
-                      value: copySwitch,
-                      onChanged: (value) {
-                        setState(() {
-                          copySwitch = value;
-                        });
-                      },
-                    ))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                    child: Text(AppLocalizations.of(context).shareSwitch)),
-                Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                    alignment: Alignment(-1, 1),
-                    child: Switch(
-                      value: shareSwitch,
-                      onChanged: (value) {
-                        setState(() {
-                          shareSwitch = value;
-                        });
-                      },
-                    ))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                    child: Text(AppLocalizations.of(context).deleteSwitch)),
-                Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                    alignment: Alignment(-1, 1),
-                    child: Switch(
-                      value: copySwitch,
-                      onChanged: (value) {
-                        setState(() {
-                          shareSwitch = value;
-                        });
-                      },
-                    ))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: EdgeInsets.fromLTRB(20, 40, 0, 0),
-                    child: Text(AppLocalizations.of(context).defaultMode)),
-                Container(
-                    padding: EdgeInsets.fromLTRB(0, 40, 40, 0),
-                    child: DropdownButton<String>(
-                      value: defaultBox,
-                      icon: Icon(Icons.arrow_downward),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          defaultBox = newValue;
-                        });
-                      },
-                      items: <String>[
-                        AppLocalizations.of(context).encryption,
-                        AppLocalizations.of(context).decryption
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                    child: Text(AppLocalizations.of(context).language)),
-                Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                    child: DropdownButton<String>(
-                      value: languageBox,
-                      icon: Icon(Icons.arrow_downward),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          languageBox = newValue;
-                        });
-                      },
-                      items: <String>["English", "Polski"]
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ))
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                    child: Text(AppLocalizations.of(context).theme)),
-                Container(
-                    padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                    child: DropdownButton<String>(
-                      value: themeBox,
-                      icon: Icon(Icons.arrow_downward),
-                      onChanged: (String newValue) {
-                        setState(() {
-                          themeBox = newValue;
-                        });
-                      },
-                      items: <String>[
-                        AppLocalizations.of(context).light,
-                        AppLocalizations.of(context).dark
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ))
-              ],
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-              child: RaisedButton(
-                onPressed: null,
-                child: Text(AppLocalizations.of(context).apply)
-              )
-            )
-          ],
-        )
- */
