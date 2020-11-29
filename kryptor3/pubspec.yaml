@@ -28,7 +28,8 @@ dependencies:
   share: any
   toast: ^0.1.5
   shared_preferences:
-
+  provider: ^3.0.0
+  flutter_phoenix:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

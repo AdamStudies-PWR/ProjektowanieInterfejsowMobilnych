@@ -2,6 +2,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:kryptor3/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share/share.dart';
@@ -33,6 +34,8 @@ class KryptoScreenState extends State<KryptoScreen> {
   String message = "";
   String info = "unknown";
 
+  int language = 0;
+
   final textController = TextEditingController();
 
   @override
@@ -49,9 +52,10 @@ class KryptoScreenState extends State<KryptoScreen> {
       shareSetting = (prefs.getBool('share') ?? false);
       deleteSetting = (prefs.getBool('delete') ?? false);
       darkTheme = ((prefs.getInt('theme') ?? 0) == 0) ? false : true;
+      language = ((prefs.getString('lang') ?? "English") == "English") ? 0 : 1;
     });
 
-    //updateTheme();
+    updateTheme();
 
     if (startup)
       setState(() {
@@ -60,8 +64,16 @@ class KryptoScreenState extends State<KryptoScreen> {
   }
 
   void updateTheme() {
-    /*ThemeMode current = darkTheme ? ThemeMode.dark : ThemeMode.light;
-    if (current != myThemes.selectedTheme()) myThemes.switchTheme();*/
+    if (darkTheme != utils.currentTheme()) {
+      if (language != utils.currentLanguage()) utils.switchLanguage();
+      utils.switchTheme();
+      Phoenix.rebirth(context);
+    } else {
+      if (language != utils.currentLanguage()) {
+        utils.switchLanguage();
+        Phoenix.rebirth(context);
+      }
+    }
   }
 
   openSetting() async {
@@ -133,8 +145,6 @@ class KryptoScreenState extends State<KryptoScreen> {
       Toast.show(info, context,
           duration: Toast.LENGTH_SHORT, gravity: Toast.BOTTOM);
     }
-
-    myThemes.switchTheme();
   }
 
   void shareMessage() {

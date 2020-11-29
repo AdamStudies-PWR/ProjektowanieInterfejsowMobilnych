@@ -1,4 +1,4 @@
 library config.globals;
-import 'themes.dart';
+import 'utility.dart';
 
-Themes myThemes = Themes();
+Utility utils = Utility();

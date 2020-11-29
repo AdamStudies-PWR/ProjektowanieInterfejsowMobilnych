@@ -1,4 +1,5 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,11 @@ import 'settings.dart';
 import 'about.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    Phoenix(
+    child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -28,12 +33,14 @@ class MyApp extends StatelessWidget {
         const Locale('en', ''),
       ],
       title: 'Kryptor',
-      theme: myThemes.getTheme(),
+      locale: utils.getLanguage(),
+      theme: utils.getTheme(),
       home: KryptoScreen(title: 'Kryptor'),
-      routes: <String, WidgetBuilder> {
-        'KryptoScreen': (BuildContext context) => new KryptoScreen(title: 'Kryptor'),
-        'SettingsScreen' : (BuildContext context) => new SettingsScreen(),
-        'AboutScreen' : (BuildContext context) => new AboutScreen()
+      routes: <String, WidgetBuilder>{
+        'KryptoScreen': (BuildContext context) =>
+            new KryptoScreen(title: 'Kryptor'),
+        'SettingsScreen': (BuildContext context) => new SettingsScreen(),
+        'AboutScreen': (BuildContext context) => new AboutScreen()
       },
     );
   }
