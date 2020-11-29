@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 
+import 'dart:developer' as developer;
+
 class Themes with ChangeNotifier {
-  static bool isDark = false;
+  static bool isDark = true;
 
   final purple = ThemeData(
-    primarySwatch: Colors.green,
-    primaryColor: Colors.black,
+    primaryColor: Colors.purple,
     brightness: Brightness.dark,
     backgroundColor: const Color(0xFF212121),
-    accentColor: Colors.white,
+    accentColor: Colors.purple,
+    buttonColor: Colors.purple,
     accentIconTheme: IconThemeData(color: Colors.black),
-    dividerColor: Colors.black12,
+    dividerColor: Colors.purple
   );
 
   final lightGreen = ThemeData(
-    primarySwatch: Colors.grey,
-    primaryColor: Colors.white,
+    primaryColor: Colors.green,
     brightness: Brightness.light,
     backgroundColor: const Color(0xFFE5E5E5),
-    accentColor: Colors.black,
+    accentColor: Colors.green,
+    buttonColor: Colors.green,
     accentIconTheme: IconThemeData(color: Colors.white),
-    dividerColor: Colors.white54,
+    dividerColor: Colors.green
   );
 
   ThemeData getTheme() {
@@ -29,5 +31,6 @@ class Themes with ChangeNotifier {
 
   void switchTheme() {
     isDark = !isDark;
+    notifyListeners();
   }
 }

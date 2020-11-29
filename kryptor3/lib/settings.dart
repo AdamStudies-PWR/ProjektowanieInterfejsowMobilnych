@@ -119,6 +119,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                     child: Switch(
                       value: copySwitch,
+                      activeColor: Theme.of(context).dividerColor,
                       onChanged: (value) {
                         setState(() {
                           copySwitch = value;
@@ -138,6 +139,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                     child: Switch(
                       value: shareSwitch,
+                      activeColor: Theme.of(context).dividerColor,
                       onChanged: (value) {
                         setState(() {
                           shareSwitch = value;
@@ -157,6 +159,7 @@ class SettingsScreenState extends State<SettingsScreen> {
                     padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                     child: Switch(
                       value: deleteSwitch,
+                      activeColor: Theme.of(context).dividerColor,
                       onChanged: (value) {
                         setState(() {
                           deleteSwitch = value;

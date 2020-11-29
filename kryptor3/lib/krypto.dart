@@ -193,6 +193,7 @@ class KryptoScreenState extends State<KryptoScreen> {
                         padding: EdgeInsets.fromLTRB(0, 20, 10, 0),
                         child: Switch(
                             value: modeSwitch,
+                            activeColor: Theme.of(context).dividerColor,
                             onChanged: (value) => changeMode(value)))
                   ],
                 ),
@@ -200,7 +201,7 @@ class KryptoScreenState extends State<KryptoScreen> {
                     height: 320,
                     width: MediaQuery.of(context).size.width - 40,
                     padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                    color: Colors.grey,
+                    color: Theme.of(context).dividerColor,
                     child: SingleChildScrollView(
                         scrollDirection: Axis.vertical, child: Text(message))),
                 Row(
@@ -234,7 +235,7 @@ class KryptoScreenState extends State<KryptoScreen> {
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.send),
+                icon: Icon(Icons.send, color: Theme.of(context).buttonColor),
                 onPressed: handleMessage,
               )
             ],
