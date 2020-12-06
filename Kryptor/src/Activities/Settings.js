@@ -287,11 +287,13 @@ class SettingsActivity extends Component
             <Picker.Item label={strings.theme2} value="banana_white"/>
           </Picker>
         </View>
-        <Button
-          style={styles.button2}
-          title={strings.apply }
-          onPress={() => this.applyButton()}
-        />
+        <View style={styles.button2}>
+          <Button
+            title={strings.apply }
+            color="#00334C"
+            onPress={() => this.applyButton()}
+          />
+        </View>
       </ScrollView>
     </View>);
   }

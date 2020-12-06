@@ -38,8 +38,6 @@ const design = styleSheetFactory(theme => (
     paddingBottom: 10,
     paddingLeft: 15,
     paddingRight: 15,
-    marginLeft: 10,
-    marginRight: 10,
     backgroundColor: theme.buttonBackground,
     color: theme.textColor,
     //borderStartColor: "green"
@@ -97,8 +95,11 @@ const design = styleSheetFactory(theme => (
   },
   button2:
   {
-    paddingTop: 40,
-    color: theme.textColor
+    marginTop: 20,
+    alignSelf: "center",
+    flex: 1,
+    width: 150,
+    height: 50
   }
 }))
 
