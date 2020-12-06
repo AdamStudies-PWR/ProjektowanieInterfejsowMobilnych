@@ -9,7 +9,7 @@ const design = styleSheetFactory(theme => (
 {
   header:
   {
-    backgroundColor: theme.buttonBackground
+    backgroundColor: theme.buttonBackground,
   },
   container:
   {
@@ -21,13 +21,15 @@ const design = styleSheetFactory(theme => (
   {
     flex: 1,
     paddingLeft: 30,
-    paddingRight: 30
+    paddingRight: 30,
+    color: theme.textColor
   },
   rowView:
   {
     alignSelf: "center",
     alignContent: "center",
     flexDirection: "row",
+    color: theme.textColor,
     paddingTop: 35
   },
   button:
@@ -39,6 +41,7 @@ const design = styleSheetFactory(theme => (
     marginLeft: 10,
     marginRight: 10,
     backgroundColor: theme.buttonBackground,
+    color: theme.textColor,
     //borderStartColor: "green"
   },
   send:
@@ -54,13 +57,15 @@ const design = styleSheetFactory(theme => (
     width: Dimensions.get("window").width,
     position: 'absolute',
     bottom: 0,
-    left: 0
+    left: 0,
+    color: theme.textColor
   },
   textInput:
   {
     alignSelf: "flex-start",
     paddingLeft: 15,
     paddingRight: 5,
+    color: theme.textColor,
     //width: (Dimensions.get('window').width - 60)
   },
   textOutput:
@@ -70,6 +75,7 @@ const design = styleSheetFactory(theme => (
     marginTop: 20,
     marginLeft: 20,
     marginRight: 20,
+    color: theme.textColor
   },
   scrollStyle:
   {
@@ -79,17 +85,20 @@ const design = styleSheetFactory(theme => (
   {
     flex: 1,
     marginLeft: 5,
-    marginRight: 30
+    marginRight: 30,
+    color: theme.textColor
   },
   picker:
   {
     flex: 1,
     paddingLeft: 30,
-    paddingTop: 18
+    paddingTop: 18,
+    color: theme.textColor
   },
   button2:
   {
     paddingTop: 40,
+    color: theme.textColor
   }
 }))
 

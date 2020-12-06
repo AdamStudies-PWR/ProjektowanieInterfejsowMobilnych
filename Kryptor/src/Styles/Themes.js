@@ -3,7 +3,7 @@ import { registerThemes } from "react-native-themed-styles"
 const deepBlue = { 
     backgroundColor: '#00425C',
     buttonBackground: '#00334C',
-    textColor: "black" 
+    textColor: "white" 
 }
 const bananaWhite = { 
     backgroundColor: '#FFFFCC',
@@ -13,8 +13,8 @@ const bananaWhite = {
 
 const styleSheetFactory = registerThemes(
   { deepBlue, bananaWhite },
-  () => "bananaWhite"
-  //() => "deepBlue"
+  //() => "bananaWhite"
+  () => "deepBlue"
 )
 
 export { styleSheetFactory }
