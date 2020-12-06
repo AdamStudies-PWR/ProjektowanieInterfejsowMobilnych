@@ -44,7 +44,8 @@ const design = styleSheetFactory(theme => (
   },
   send:
   {
-    alignSelf: "flex-end",
+    justifyContent: 'center',
+    //alignSelf: "flex-end",
     //marginRight: 15,
     //marginLeft: 15,
     flex: 1,
@@ -53,6 +54,7 @@ const design = styleSheetFactory(theme => (
   messageBox:
   {
     width: Dimensions.get("window").width,
+    backgroundColor: theme.backgroundColor,
     position: 'absolute',
     bottom: 0,
     left: 0,
@@ -61,9 +63,8 @@ const design = styleSheetFactory(theme => (
   textInput:
   {
     alignSelf: "flex-start",
-    paddingLeft: 15,
-    paddingRight: 5,
     color: theme.textColor,
+    width: '88%'
     //width: (Dimensions.get('window').width - 60)
   },
   textOutput:
