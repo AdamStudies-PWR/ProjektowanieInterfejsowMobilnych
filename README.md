@@ -1,7 +1,8 @@
 # Projekt na Programowanie Interfejsów Mobilnych
-Repozytorium to zawiera nieiwlką aplikacje osobistą mającą na celu zapoznanie nas z nowymi technologamii.
+Prosta aplikacja mająca na celu zaprezentować możliwośći i różnice w wykorzystanych technologiach. Wersja **Java**.
+
+Szyfrowanie napisane we współpracy z [Mqwere](https://github.com/Mqwere).
 
 Alternatywne wersje:
 * [React Native](https://github.com/AdamStudies-PWR/ProjektowanieInterfejsowMobilnych/tree/React)
-* Flutter(?)
-## Wersja Java
+* [Flutter](https://github.com/AdamStudies-PWR/ProjektowanieInterfejsowMobilnych/tree/Flutter)
