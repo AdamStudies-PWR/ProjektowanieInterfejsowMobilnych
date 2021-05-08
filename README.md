@@ -5,4 +5,4 @@ Szyfrowanie napisane we współpracy z [Mqwere](https://github.com/Mqwere).
 
 Alternatywne wersje:
 * [Java](https://github.com/AdamStudies-PWR/ProjektowanieInterfejsowMobilnych/tree/Java)
-* [React](https://github.com/AdamStudies-PWR/ProjektowanieInterfejsowMobilnych/tree/React)
+* [React Native](https://github.com/AdamStudies-PWR/ProjektowanieInterfejsowMobilnych/tree/React)
